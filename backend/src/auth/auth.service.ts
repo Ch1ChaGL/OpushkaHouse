@@ -9,6 +9,7 @@ import { AuthDto } from './dto/auth.dto';
 import { hash, verify } from 'argon2';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@prisma/client';
+import { LoginDto } from './dto/login.dto';
 
 @Injectable()
 export class AuthService {
@@ -17,10 +18,10 @@ export class AuthService {
     private jwt: JwtService,
   ) {}
 
-  async login(dto: AuthDto) {
+  async login(dto: LoginDto) {
     const user = await this.validateUser(dto);
 
-    const tokens = await this.issueTokens(user.userId);
+    const tokens = await this.issueTokens(user.userId, user.roleId);
 
     return {
       user: this.returnUserField(user),
@@ -38,7 +39,7 @@ export class AuthService {
       },
     });
 
-    const tokens = await this.issueTokens(user.userId);
+    const tokens = await this.issueTokens(user.userId, user.roleId);
 
     return {
       user: this.returnUserField(user),
@@ -63,11 +64,12 @@ export class AuthService {
         phone: dto.phone,
         firstName: dto.firstName,
         lastName: dto.lastName,
+        roleId: dto.roleId,
         password: await hash(dto.password),
       },
     });
 
-    const tokens = await this.issueTokens(user.userId);
+    const tokens = await this.issueTokens(user.userId, user.roleId);
 
     return {
       user: this.returnUserField(user),
@@ -75,8 +77,8 @@ export class AuthService {
     };
   }
 
-  private async issueTokens(userId: Number) {
-    const data = { userId };
+  private async issueTokens(userId: Number, roleId: Number) {
+    const data = { userId, roleId };
 
     const accessToken = this.jwt.sign(data, {
       expiresIn: '1h',
@@ -89,14 +91,17 @@ export class AuthService {
     return { accessToken, refreshToken };
   }
 
-  private returnUserField(user: User): Pick<User, 'userId' | 'phone'> {
+  private returnUserField(
+    user: User,
+  ): Pick<User, 'userId' | 'phone' | 'roleId'> {
     return {
       userId: user.userId,
       phone: user.phone,
+      roleId: user.roleId,
     };
   }
 
-  private async validateUser(dto: AuthDto) {
+  private async validateUser(dto: AuthDto | LoginDto) {
     const user = await this.prisma.user.findUnique({
       where: {
         phone: dto.phone,

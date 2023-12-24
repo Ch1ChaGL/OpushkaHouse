@@ -1,6 +1,6 @@
 import { MinLength, IsString, IsMobilePhone, Matches, IsNumber } from 'class-validator';
 
-export class AuthDto {
+export class LoginDto {
   @IsMobilePhone('ru-RU')
   @Matches(/^\+7\d{10}$/, {
     message: 'Номер телефона должен начинаться с +7 и состоять из 11 цифр',
@@ -11,12 +11,4 @@ export class AuthDto {
   @IsString()
   password: string;
 
-  @IsString()
-  firstName: string;
-
-  @IsString()
-  lastName: string;
-
-  @IsNumber()
-  roleId: number;
 }

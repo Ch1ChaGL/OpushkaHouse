@@ -7,6 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Role {
+  roleId Int @map("role_id") @id
+  name String 
+  users User[]
+}
+
 model User {
   userId Int @id @default(autoincrement()) @map("user_id")
   password String @map("password")
@@ -15,9 +21,15 @@ model User {
   phone String @unique @map("phone")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+  roleId Int @map("role_id")
+  role Role @relation(fields: [roleId], references: [roleId])
 }
+
+
+
 
 model House {
   houseId Int @id @map("house_id")
   name String 
 }
+
