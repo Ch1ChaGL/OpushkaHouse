@@ -24,23 +24,28 @@ model User {
   updatedAt DateTime @updatedAt @map("updated_at")
   roleId Int @map("role_id")
   role Role @relation(fields: [roleId], references: [roleId])
+  loginLogs LoginLog[]
 }
 
-
+model HouseType {
+  houseTypeId Int @id @map("house_id")
+  name String
+  houses House[]
+}
 
 
 model House {
   houseId      Int          @id @map("house_id")
-  name         String
+  houseTypeId  Int          @map("house_type_id")
   peopleCount  Int          @map("people_count")
   houseStatus  HouseStatus[]
+  houseType    HouseType    @relation(fields: [houseTypeId], references: [houseTypeId])
 }
 
 model Status {
   statusId     Int          @id @map("status_id")
   name         String
   roleId       Int          @map("role_id")
-  time         DateTime
   houseStatus  HouseStatus[]
   role         Role         @relation(fields: [roleId], references: [roleId])
 }
@@ -53,4 +58,13 @@ model HouseStatus {
   status       Status       @relation(fields: [statusId], references: [statusId])
 
   @@id([houseId, statusId])
+}
+
+model LoginLog{
+  id         Int       @id @default(autoincrement())
+  userId     Int
+  username   String
+  action     String    // "login" или "logout"
+  timestamp  DateTime  @default(now())
+  user       User      @relation(fields: [userId], references: [userId])
 }
