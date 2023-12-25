@@ -3,13 +3,11 @@ import {
   ExecutionContext,
   Injectable,
   UnauthorizedException,
-  UseGuards,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
-import { ExtractJwt } from 'passport-jwt';
 import { Observable } from 'rxjs';
-import { ROLES_KEY, Roles } from './roles.decorators';
+import { ROLES_KEY } from './roles.decorators';
 import { User } from '@prisma/client';
 
 @Injectable()
@@ -36,12 +34,15 @@ export class RolesGuard implements CanActivate {
       const bearer = authHeader.split(' ')[0];
       const token = authHeader.split(' ')[1];
 
-      if (bearer !== 'Bearer' || !token)
+      if (bearer !== 'Bearer' || !token) {
         throw new UnauthorizedException('Пользователь не авторизован');
+      }
 
       const user = this.jwt.verify<Pick<User, 'roleId' | 'userId'>>(token);
       console.log(user);
       return requiredRoles.some(requiredRole => requiredRole === user.roleId);
-    } catch {}
+    } catch (err) {
+      console.log(err);
+    }
   }
 }

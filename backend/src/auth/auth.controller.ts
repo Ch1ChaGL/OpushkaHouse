@@ -12,8 +12,8 @@ import { AuthDto } from './dto/auth.dto';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { LoginDto } from './dto/login.dto';
 import { Auth } from './decorators/auth.decorators';
-import { Roles } from './decorators/roles.decorators';
-import { RolesGuard } from './decorators/roles.guard';
+import { Roles } from '../decorators/roles.decorators';
+import { RolesGuard } from '../decorators/roles.guard';
 import { RoleType } from 'src/role/role.enum';
 
 @Controller('auth')

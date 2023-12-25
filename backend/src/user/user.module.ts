@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { AuthController } from './auth.controller';
+import { UserService } from './user.service';
+import { UserController } from './user.controller';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'src/prisma.service';
-import { JwtModule } from '@nestjs/jwt';
+import { JwtStrategy } from 'src/auth/jwt.stategy';
+import { AuthModule } from 'src/auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { getJwtConfig } from 'src/config/jwt.config';
-import { JwtStrategy } from './jwt.stategy';
 
 @Module({
   imports: [
@@ -16,8 +17,7 @@ import { JwtStrategy } from './jwt.stategy';
       useFactory: getJwtConfig,
     }),
   ],
-  controllers: [AuthController],
-  providers: [AuthService, PrismaService, JwtStrategy],
-  exports:[JwtStrategy, JwtModule]
+  controllers: [UserController],
+  providers: [UserService, PrismaService, JwtStrategy],
 })
-export class AuthModule {}
+export class UserModule {}
