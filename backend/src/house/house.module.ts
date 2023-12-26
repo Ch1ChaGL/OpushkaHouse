@@ -17,5 +17,6 @@ import { getJwtConfig } from 'src/config/jwt.config';
   ],
   controllers: [HouseController],
   providers: [HouseService, PrismaService],
+  exports: [HouseService]
 })
 export class HouseModule {}

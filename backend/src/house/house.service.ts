@@ -5,6 +5,11 @@ import { PrismaService } from 'src/prisma.service';
 export class HouseService {
   constructor(private prisma: PrismaService) {}
 
+  async updateHouseFromExcel(dto){
+
+  }
+
+
   async getAdminHouseInformation() {
     const houseData = await this.prisma.house.findMany({
       //@ts-ignore

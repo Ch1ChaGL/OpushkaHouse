@@ -7,9 +7,10 @@ import { StatusModule } from './status/status.module';
 import { HouseModule } from './house/house.module';
 import { UserModule } from './user/user.module';
 import { LogModule } from './log/log.module';
+import { ExcelModule } from './excel/excel.module';
 
 @Module({
-  imports: [AuthModule, ConfigModule.forRoot(), RoleModule, StatusModule, HouseModule, UserModule, LogModule],
+  imports: [AuthModule, ConfigModule.forRoot(), RoleModule, StatusModule, HouseModule, UserModule, LogModule, ExcelModule],
   controllers: [],
   providers: [PrismaService],
 })
