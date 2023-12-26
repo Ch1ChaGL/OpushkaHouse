@@ -56,8 +56,15 @@ model HouseStatus {
   time         DateTime?     
   house        House        @relation(fields: [houseId], references: [houseId])
   status       Status       @relation(fields: [statusId], references: [statusId])
-
+  placeId      Int          @map("place_id")
+  place        Place        @relation(fields: [placeId], references: [placeId])
   @@id([houseId, statusId])
+}
+
+model Place {
+  placeId Int   @map("place_id") @id
+  name    String
+  houseStatuses HouseStatus[]
 }
 
 model LoginLog{

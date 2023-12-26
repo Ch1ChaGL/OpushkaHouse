@@ -1,13 +1,27 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import * as ExcelJS from 'exceljs';
-const moment = require('moment');
+import 'moment/locale/ru';
+import * as moment from 'moment';
 import { HousemaidFileColumn } from 'src/consts/HousemaidFileColumn.consts';
+moment.locale('ru')
 
 @Injectable()
 export class ExcelService {
   constructor() {}
 
   dateFormat = 'DD.MM.YY HH:mm';
+  private parseBusyCountDate = (text: String) => {
+    const arr = text.split(' ');
+    if (arr.length === 1) return null;
+    const regex = /\((\d+)\/(\d+)\)/;
+    const match = arr[1].match(regex);
+
+    if (match) {
+      const firstNumber = parseInt(match[1], 10); // Преобразуйте строку в число
+      const secondNumber = parseInt(match[2], 10);
+      return [firstNumber, secondNumber];
+    }
+  };
 
   async getHousesFromExcel(file) {
     try {
@@ -23,10 +37,15 @@ export class ExcelService {
         // [HousemaidFileColumn.Status]: cell => cell.text,
         [HousemaidFileColumn.CountPeople]: cell => +cell.text,
         [HousemaidFileColumn.CountChildren]: cell => +cell.text,
+        [HousemaidFileColumn.Busy]: cell => this.parseBusyCountDate(cell.text),
         [HousemaidFileColumn.Leave]: cell =>
-          cell.text !== '' ? moment(cell.text, this.dateFormat).toDate() : null,
+          cell.text !== ''
+            ? moment(cell.text, 'DD.MM.YY HH:mm').toDate()
+            : null,
         [HousemaidFileColumn.MoveIn]: cell =>
-          cell.text !== '' ? moment(cell.text, this.dateFormat).toDate() : null,
+          cell.text !== ''
+            ? moment(cell.text, 'DD.MM.YY HH:mm').toDate() 
+            : null,
       };
 
       const houses = [];

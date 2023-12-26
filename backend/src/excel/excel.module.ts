@@ -5,6 +5,6 @@ import { HouseModule } from 'src/house/house.module';
 @Module({
   controllers: [],
   providers: [ExcelService],
-  exports: [ExcelService]
+  exports: [ExcelService],
 })
 export class ExcelModule {}
