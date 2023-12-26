@@ -1,3 +1,4 @@
+import { HousemaidFileColumn } from 'src/consts/HousemaidFileColumn.consts';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 
@@ -5,10 +6,36 @@ import { PrismaService } from 'src/prisma.service';
 export class HouseService {
   constructor(private prisma: PrismaService) {}
 
-  async updateHouseFromExcel(dto){
+  async updateHouseFromExcel(houses) {
+    console.log(houses);
+    for (const house of houses) {
+      const peopleCount =
+        house[HousemaidFileColumn.CountChildren] +
+        house[HousemaidFileColumn.CountPeople];
 
+      this.updateCountPeople(house[HousemaidFileColumn.HouseID], peopleCount);
+
+      const LeaveTime = house[HousemaidFileColumn.Leave];
+      const MoveInTime = house[HousemaidFileColumn.MoveIn];
+
+      //Заезд
+      if (!LeaveTime && MoveInTime) {
+      }
+      //Выезд
+      if (LeaveTime && !MoveInTime) {
+      }
+      
+      // const LeaveMoveIn = LeaveTime && MoveInTime;
+      // if (LeaveMoveIn && )
+    }
   }
 
+  async updateCountPeople(houseId: number, peopleCount: number) {
+    return await this.prisma.house.update({
+      where: { houseId },
+      data: { peopleCount },
+    });
+  }
 
   async getAdminHouseInformation() {
     const houseData = await this.prisma.house.findMany({
@@ -49,7 +76,7 @@ export class HouseService {
     };
   }
 
-  async getHousemanInformation(){
+  async getHousemanInformation() {
     const houseData = await this.prisma.house.findMany({
       //@ts-ignore
       include: {
@@ -69,7 +96,7 @@ export class HouseService {
     return {
       houseData: this.transformedData(houseData),
     };
-  } 
+  }
 
   private transformedData = houseData =>
     houseData.map(house => ({

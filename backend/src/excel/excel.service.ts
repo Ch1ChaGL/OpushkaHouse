@@ -1,13 +1,15 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import * as ExcelJS from 'exceljs';
+const moment = require('moment');
 import { HousemaidFileColumn } from 'src/consts/HousemaidFileColumn.consts';
-import { HouseService } from 'src/house/house.service';
 
 @Injectable()
 export class ExcelService {
-  constructor(private houseService: HouseService) {}
+  constructor() {}
 
-  async uploadExcel(file) {
+  dateFormat = 'DD.MM.YY HH:mm';
+
+  async getHousesFromExcel(file) {
     try {
       const workbook = new ExcelJS.Workbook();
       await workbook.xlsx.load(file.buffer);
@@ -17,13 +19,14 @@ export class ExcelService {
       const rowCount = firstSheet.rowCount;
 
       const columnHandlers = {
-        [HousemaidFileColumn.HouseID]: cell => cell.text,
-        [HousemaidFileColumn.Status]: cell => cell.text,
-        [HousemaidFileColumn.HouseType]: cell => cell.text,
-        [HousemaidFileColumn.CountPeople]: cell => cell.text,
-        [HousemaidFileColumn.CountChildren]: cell => cell.text,
-        [HousemaidFileColumn.Leave]: cell => cell.text,
-        [HousemaidFileColumn.MoveIn]: cell => cell.text,
+        [HousemaidFileColumn.HouseID]: cell => +cell.text,
+        // [HousemaidFileColumn.Status]: cell => cell.text,
+        [HousemaidFileColumn.CountPeople]: cell => +cell.text,
+        [HousemaidFileColumn.CountChildren]: cell => +cell.text,
+        [HousemaidFileColumn.Leave]: cell =>
+          cell.text !== '' ? moment(cell.text, this.dateFormat).toDate() : null,
+        [HousemaidFileColumn.MoveIn]: cell =>
+          cell.text !== '' ? moment(cell.text, this.dateFormat).toDate() : null,
       };
 
       const houses = [];

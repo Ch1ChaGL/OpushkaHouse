@@ -1,14 +1,31 @@
-import { Body, Controller, Get, HttpCode, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { ExcelService } from './../excel/excel.service';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Post,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { HouseService } from './house.service';
 import { Auth } from 'src/auth/decorators/auth.decorators';
 import { Roles } from 'src/decorators/roles.decorators';
 import { RoleType } from 'src/role/role.enum';
 import { RolesGuard } from 'src/decorators/roles.guard';
 import { HouseCreateDto } from './dto/house.create.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('house')
 export class HouseController {
-  constructor(private readonly houseService: HouseService) {}
+  constructor(
+    private readonly houseService: HouseService,
+    private excelService: ExcelService,
+  ) {}
 
   @Auth()
   @Roles(RoleType.Admin)
@@ -40,7 +57,18 @@ export class HouseController {
   @Roles(RoleType.Admin)
   @UseGuards(RolesGuard)
   @Post('house')
-  async createHouse(@Body() dto: HouseCreateDto){
-    
+  async createHouse(@Body() dto: HouseCreateDto) {}
+
+  @Post('updateFromExcel')
+  @UseInterceptors(FileInterceptor('file'))
+  async updateHouseFromExcel(@UploadedFile() file) {
+    if (!file.originalname.match(/\.(xlsx)$/)) {
+      throw new BadRequestException(
+        'Неверный формат файла. Пожалуйста, загрузите файл Excel (.xlsx).',
+      );
+    }
+
+    const houses = await this.excelService.getHousesFromExcel(file);
+    await this.houseService.updateHouseFromExcel(houses);
   }
 }

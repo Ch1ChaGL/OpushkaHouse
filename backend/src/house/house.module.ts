@@ -5,6 +5,7 @@ import { PrismaService } from 'src/prisma.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { getJwtConfig } from 'src/config/jwt.config';
+import { ExcelModule } from 'src/excel/excel.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { getJwtConfig } from 'src/config/jwt.config';
       inject: [ConfigService],
       useFactory: getJwtConfig,
     }),
+    ExcelModule
   ],
   controllers: [HouseController],
   providers: [HouseService, PrismaService],

@@ -23,8 +23,8 @@ export class AuthController {
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
   @Post('register')
-  @Auth()
-  @Roles(RoleType.Admin)
+  // @Auth()
+  // @Roles(RoleType.Admin)
   @UseGuards(RolesGuard)
   async register(@Body() dto: AuthDto) {
     return this.authService.register(dto);
