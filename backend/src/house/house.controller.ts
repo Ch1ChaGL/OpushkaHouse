@@ -6,6 +6,7 @@ import {
   Get,
   HttpCode,
   Post,
+  Put,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -19,6 +20,7 @@ import { RoleType } from 'src/role/role.enum';
 import { RolesGuard } from 'src/decorators/roles.guard';
 import { HouseCreateDto } from './dto/house.create.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { HouseStatusDto } from './dto/houseStatus.update.dto';
 
 @Controller('house')
 export class HouseController {
@@ -51,6 +53,7 @@ export class HouseController {
     return this.houseService.getHousemanInformation();
   }
 
+  //TODO вот это надо сделать в целом
   @UsePipes(new ValidationPipe())
   @Auth()
   @HttpCode(200)
@@ -70,5 +73,11 @@ export class HouseController {
 
     const houses = await this.excelService.getHousesFromExcel(file);
     await this.houseService.updateHouseFromExcel(houses);
+  }
+
+  //!Разделение на разные эндпоинты для огрничения возможности ролей или проверка роли через декоратор
+  @Put('updateStatus')
+  async updateStatus(dto: HouseStatusDto) {
+    
   }
 }

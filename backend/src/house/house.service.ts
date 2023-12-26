@@ -23,6 +23,7 @@ export class HouseService {
       const LeaveTime = house[HousemaidFileColumn.Leave];
       const MoveInTime = house[HousemaidFileColumn.MoveIn];
 
+      //Пустой чистый дом (как я понимаю)
       if (!LeaveTime && !MoveInTime) continue;
 
       //Проживает
@@ -33,7 +34,8 @@ export class HouseService {
         house[HousemaidFileColumn.Busy][1] !== 1
       ) {
         const amountDay = house[HousemaidFileColumn.Busy][1];
-        let time = null;
+        let timeStart = null;
+        let timeEnd = null;
         let houseStatus = null;
         if (amountDay >= 3) {
           houseStatus = HouseStatus.NeedsCleaningAndLinenReplacement;
@@ -42,30 +44,41 @@ export class HouseService {
           houseStatus = HouseStatus.RequiresWetCleaning;
         }
 
-        await this.updateHouseStatus(houseId, houseStatus, Place.House, time);
+        await this.updateHouseStatus(houseId, houseStatus, Place.House, timeStart, timeEnd);
         continue;
       }
 
       const HouseStatusTypeId = HouseStatus.NeedsHouseCleaning;
       const SiteStatusTypeId = HouseStatus.NeedsSiteCleaning;
-      let time = null;
+      let timeStart = null;
+      let timeEnd = null;
 
       //Заезд
-      if (!LeaveTime && MoveInTime) time = house[HousemaidFileColumn.MoveIn];
+      if (!LeaveTime && MoveInTime){
+        timeStart = null;
+        timeEnd = house[HousemaidFileColumn.MoveIn];
+      } 
 
       //Выезд
-      if (LeaveTime && !MoveInTime) time = house[HousemaidFileColumn.Leave];
+      if (LeaveTime && !MoveInTime) {
+        timeStart = house[HousemaidFileColumn.Leave];
+        timeEnd = null;
+      };
 
       //Выезд-Заезд
-      if (LeaveTime && MoveInTime) time = house[HousemaidFileColumn.MoveIn];
+      if (LeaveTime && MoveInTime){
+        timeStart = house[HousemaidFileColumn.Leave];
+        timeEnd = house[HousemaidFileColumn.MoveIn];
+      } 
 
       await this.updateHouseStatus(
         houseId,
         HouseStatusTypeId,
         Place.House,
-        time,
+        timeStart,
+        timeEnd
       );
-      await this.updateHouseStatus(houseId, SiteStatusTypeId, Place.Site, time);
+      await this.updateHouseStatus(houseId, SiteStatusTypeId, Place.Site, timeStart, timeEnd);
     }
   }
 
@@ -76,11 +89,17 @@ export class HouseService {
     });
   }
 
-  async updateHouseStatus(houseId, statusId, placeId, time = null) {
+  async updateHouseStatus(
+    houseId,
+    statusId,
+    placeId,
+    timeStart = null,
+    timeEnd = null,
+  ) {
     await this.prisma.houseStatus.updateMany({
       //@ts-ignore
       where: { houseId, placeId },
-      data: { statusId, time },
+      data: { statusId, timeStart, timeEnd },
     });
   }
 
@@ -167,7 +186,8 @@ export class HouseService {
       peopleCount: house.peopleCount,
       houseStatus: house.houseStatus.map(houseStatus => ({
         statusId: houseStatus.status.statusId,
-        time: houseStatus.time,
+        timeStart: houseStatus.timeStart,
+        timeEnd: houseStatus.timeEnd,
         name: houseStatus.status.name,
         roleId: houseStatus.status.roleId,
       })),
