@@ -1,3 +1,16 @@
+@font-face {
+  font-family: 'Etna';
+  src: url('./fonts/etna.eot'); /* IE 9 Compatibility Mode */
+  src: url('./fonts/etna.eot?#iefix') format('embedded-opentype'),
+    /* IE < 9 */ url('./fonts/etna.woff2') format('woff2'),
+    /* Super Modern Browsers */ url('./fonts/etna.woff') format('woff'),
+    /* Firefox >= 3.6, any other modern browser */ url('./fonts/etna.ttf')
+      format('truetype'),
+    /* Safari, Android, iOS */ url('./fonts/etna.svg#etna') format('svg'); /* Chrome < 4, Legacy iOS */
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
 :root {
   --navyBlue: #236092;
   --grey: #b8b8b8;
@@ -28,7 +41,7 @@ html {
   padding: 0;
   margin: 0;
   height: 100%;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Ubuntu', sans-serif;
   font-weight: 400;
   background-color: var(--background-color);
 }
