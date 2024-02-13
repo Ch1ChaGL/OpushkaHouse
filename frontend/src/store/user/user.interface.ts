@@ -13,7 +13,7 @@ export interface IInitialState {
 }
 
 export interface ILoginData {
-  email: string;
+  phone: string;
   password: string;
 }
 

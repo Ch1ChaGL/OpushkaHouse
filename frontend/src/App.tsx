@@ -4,7 +4,11 @@ import AppRouter from './routes/AppRouter';
 const App = () => {
   return (
     <BrowserRouter>
-      <AppRouter />
+      <div className='wrapper'>
+        <div className='main'>
+          <AppRouter />
+        </div>
+      </div>
     </BrowserRouter>
   );
 };

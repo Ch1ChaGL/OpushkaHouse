@@ -1,0 +1,34 @@
+.label {
+  display: block;
+}
+
+.title {
+  margin-bottom: 5px;
+}
+
+.input__container {
+  margin-bottom: 20px;
+}
+
+.input {
+  width: 100%;
+  padding: 16px;
+  font-size: 16px;
+  border: 3.5px solid #236092; /* Тот же синий цвет, что и в вашем кастомном контроле */
+  border-radius: 10px;
+  color: #236092;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.input::placeholder {
+  color: #236092; /* Задает цвет текста плейсхолдера */
+}
+
+.input:focus {
+  border-color: #236092; /* Тот же синий цвет, что и в вашем кастомном контроле */
+}
+
+.error {
+  color: var(--error);
+}
