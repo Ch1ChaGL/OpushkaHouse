@@ -84,20 +84,15 @@ export class AuthService {
       expiresIn: '1h',
     });
 
-    const refreshToken = this.jwt.sign(data, {
-      expiresIn: '7d',
-    });
-
-    return { accessToken, refreshToken };
+    return { accessToken };
   }
 
   private returnUserField(
     user: User,
-  ): Pick<User, 'userId' | 'phone' | 'roleId'> {
+  ): Omit<User, 'password' | 'createdAt' | 'updatedAt'> {
+    const { password, createdAt, updatedAt, ...rest } = user;
     return {
-      userId: user.userId,
-      phone: user.phone,
-      roleId: user.roleId,
+      ...rest,
     };
   }
 
