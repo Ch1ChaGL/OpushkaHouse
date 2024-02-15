@@ -23,8 +23,9 @@ const Alert: React.FC<AlertProps> = ({
       open={open}
       autoHideDuration={3000}
       onClose={onClose}
+      sx={{ color: '#e84900' }}
     >
-      <AlertMUI onClose={onClose} severity={type}>
+      <AlertMUI onClose={onClose} severity={type} sx={{ color: '#e84900' }}>
         <AlertTitle>{title}</AlertTitle>
         {description}
       </AlertMUI>

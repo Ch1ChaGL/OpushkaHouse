@@ -40,3 +40,13 @@
     margin-top: 10px;
   }
 }
+
+@media (max-width: 400px) {
+  .container__date {
+    font-size: 12px;
+  }
+
+  .container__user {
+    font-size: 12px;
+  }
+}
