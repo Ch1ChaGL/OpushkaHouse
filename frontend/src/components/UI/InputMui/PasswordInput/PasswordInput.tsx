@@ -54,7 +54,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
           },
           '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline':
             {
-              borderColor: '#236092',
+              borderColor: '#3f88c4',
               borderWidth: '3.5px', // Задание толщины обводки при фокусировке
             },
           '& .MuiIconButton-root': {

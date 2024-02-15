@@ -16,7 +16,7 @@ const Login = () => {
   });
 
   const onSubmit: SubmitHandler<ILoginData> = data => {
-    console.log('1');
+    console.log('data', data);
     reset();
   };
 
@@ -29,16 +29,19 @@ const Login = () => {
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.fields}>
-            <Field
-              className={styles.tel}
-              mask='+7(999)999-99-99'
-              text='Номер телефона'
-              type='numeric'
-              register={register('phone', {
-                required: 'Номер обязательное поле',
-              })}
-              error={errors.phone?.message}
-            />
+            <div className={styles.tel}>
+              <Field
+                className={styles.tel}
+                mask='+{7}(000)000-00-00'
+                text='Номер телефона'
+                type='tel'
+                placeholder='+7(000)000-00-00'
+                register={register('phone', {
+                  required: 'Номер обязательное поле',
+                })}
+                error={errors.phone?.message}
+              />
+            </div>
 
             <PasswordInput
               register={register('password', {

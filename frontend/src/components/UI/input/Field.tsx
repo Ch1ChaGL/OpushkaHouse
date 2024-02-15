@@ -1,14 +1,32 @@
-import { FC } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import { IField } from './field.interface';
 import styles from './Field.module.css';
-import ReactInputMask from 'react-input-mask';
 import { FormControl, InputLabel, OutlinedInput } from '@mui/material';
-import TextMaskCustom from './TextMaskCustom';
+import IMask from 'imask';
 
-const Field: FC<IField> = (
-  { error, className, type = 'text', text, mask = '', ...rest },
-  ref,
-) => {
+const Field: FC<IField> = ({
+  error,
+  className,
+  type = 'text',
+  text,
+  mask = '',
+  register,
+  ...rest
+}) => {
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (inputRef.current && mask) {
+      const maskInstance = IMask(inputRef.current, {
+        mask,
+      });
+
+      return () => {
+        maskInstance.destroy();
+      };
+    }
+  }, [mask]);
+
   return (
     <FormControl
       sx={{
@@ -31,7 +49,7 @@ const Field: FC<IField> = (
         },
         '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline':
           {
-            borderColor: '#236092',
+            borderColor: '#3f88c4',
             borderWidth: '3.5px', // Задание толщины обводки при фокусировке
           },
         '& .MuiIconButton-root': {
@@ -43,19 +61,12 @@ const Field: FC<IField> = (
       <InputLabel htmlFor='outlined-adornment-input'>{text}</InputLabel>
       <OutlinedInput
         {...rest}
-        className={className}
+        {...register}
         id='outlined-adornment-input'
         type={type}
-        inputComponent={props => (
-          <TextMaskCustom
-            {...props}
-            {...rest}
-            inputRef={inputElement =>
-              props.inputRef && props.inputRef(inputElement)
-            }
-          />
-        )}
         label={text}
+        placeholder={rest.placeholder}
+        inputRef={inputRef}
       />
       {error && <div className={styles.error}>{error}</div>}
     </FormControl>
