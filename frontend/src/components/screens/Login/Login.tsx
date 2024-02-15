@@ -16,7 +16,7 @@ const Login = () => {
   });
 
   const onSubmit: SubmitHandler<ILoginData> = data => {
-    console.log('asdasds');
+    console.log('1');
     reset();
   };
 
@@ -30,14 +30,11 @@ const Login = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.fields}>
             <Field
-              text=''
-              type='text'
-              placeholder='Номер телефона'
-              {...register('phone', {
-                pattern: {
-                  value: /^\+7\d{10}$/,
-                  message: 'Формат номера не верный',
-                },
+              className={styles.tel}
+              mask='+7(999)999-99-99'
+              text='Номер телефона'
+              type='numeric'
+              register={register('phone', {
                 required: 'Номер обязательное поле',
               })}
               error={errors.phone?.message}
