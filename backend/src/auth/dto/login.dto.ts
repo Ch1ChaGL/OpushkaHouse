@@ -1,4 +1,10 @@
-import { MinLength, IsString, IsMobilePhone, Matches, IsNumber } from 'class-validator';
+import {
+  MinLength,
+  IsString,
+  IsMobilePhone,
+  Matches,
+  IsNumber,
+} from 'class-validator';
 
 export class LoginDto {
   @IsMobilePhone('ru-RU')
@@ -7,8 +13,7 @@ export class LoginDto {
   })
   phone: string;
 
-  @MinLength(6, { message: 'Пароль должен быть больше 6 символов' })
+  @MinLength(5, { message: 'Пароль должен быть больше 5 символов' })
   @IsString()
   password: string;
-
 }

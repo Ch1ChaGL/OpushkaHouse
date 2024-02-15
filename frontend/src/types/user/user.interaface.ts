@@ -16,3 +16,8 @@ export interface IUserLogin {
   password: string;
 }
 
+export enum UserRole {
+  ADMIN = 1,
+  Housemaid = 2,
+  Houseman = 3,
+}

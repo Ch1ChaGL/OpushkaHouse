@@ -7,7 +7,7 @@ export class AuthDto {
   })
   phone: string;
 
-  @MinLength(6, { message: 'Пароль должен быть больше 6 символов' })
+  @MinLength(5, { message: 'Пароль должен быть больше 5 символов' })
   @IsString()
   password: string;
 

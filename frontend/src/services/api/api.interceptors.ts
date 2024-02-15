@@ -4,9 +4,10 @@ import { getAccessToken, removeFromStorage } from '../auth/auth.helper';
 import { AuthService } from '../auth/auth.service';
 
 export const instance = axios.create({
-  baseURL: process.env.API_URL,
+  baseURL: process.env.REACT_APP_API_URL,
   headers: getContentType(),
 });
+
 instance.interceptors.request.use(config => {
   const accessToken = getAccessToken();
 

@@ -1,0 +1,42 @@
+.container__header {
+  min-width: 100%;
+  width: 100%;
+  margin-top: 30px;
+}
+.container__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.information {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.workShiftInformation {
+  color: var(--grey);
+  word-break: keep-all;
+}
+
+.container__date {
+  font-size: 17px;
+}
+
+.container__user {
+  font-size: 15px;
+}
+
+@media (max-width: 500px) {
+  .container__date {
+    font-size: 15px;
+  }
+
+  .container__user {
+    font-size: 13px;
+  }
+  .container__header {
+    margin-top: 10px;
+  }
+}

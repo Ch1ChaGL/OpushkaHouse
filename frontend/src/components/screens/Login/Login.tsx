@@ -4,8 +4,36 @@ import { ILoginData } from '../../../store/user/user.interface';
 import Field from '../../UI/input/Field';
 import { Button } from '@mui/material';
 import PasswordInput from '../../UI/InputMui/PasswordInput/PasswordInput';
+import { useActions } from '../../../hooks/useActions';
+import { useNavigate } from 'react-router-dom';
+import { useTypedSelector } from '../../../hooks/useTypedSelector';
+import { useEffect, useState } from 'react';
+import Alert from '../../UI/Alert/Alert';
 
 const Login = () => {
+  const [errorPopup, setErrorPopup] = useState<{
+    title: string;
+    message: string;
+  } | null>(null);
+
+  const { login, clearError } = useActions();
+  const navigate = useNavigate();
+  const user = useTypedSelector(state => state.user);
+
+  useEffect(() => {
+    if (user.user) navigate('/', { replace: true });
+
+    if (user.error !== null) {
+      setErrorPopup({ title: 'Произошла ошибка', message: user.error });
+      clearError();
+    }
+  }, [user, navigate]);
+
+  const handlePopupClose = () => {
+    setErrorPopup(null);
+    // Assuming you have a clearError action in your useActions hook
+  };
+
   const {
     register,
     handleSubmit,
@@ -16,7 +44,7 @@ const Login = () => {
   });
 
   const onSubmit: SubmitHandler<ILoginData> = data => {
-    console.log('data', data);
+    login(data);
     reset();
   };
 
@@ -32,12 +60,16 @@ const Login = () => {
             <div className={styles.tel}>
               <Field
                 className={styles.tel}
-                mask='+{7}(000)000-00-00'
+                mask='+{7}0000000000'
                 text='Номер телефона'
                 type='tel'
                 placeholder='+7(000)000-00-00'
                 register={register('phone', {
                   required: 'Номер обязательное поле',
+                  pattern: {
+                    value: /^\+7\d{10}$/,
+                    message: 'Формат номера не верный',
+                  },
                 })}
                 error={errors.phone?.message}
               />
@@ -46,8 +78,8 @@ const Login = () => {
             <PasswordInput
               register={register('password', {
                 minLength: {
-                  value: 6,
-                  message: 'Пароль должен быть больше 6 символов',
+                  value: 5,
+                  message: 'Пароль должен быть больше 5 символов',
                 },
                 required: 'Пароль обязательное поле',
               })}
@@ -73,6 +105,15 @@ const Login = () => {
               Войти
             </Button>
           </div>
+          {errorPopup && (
+            <Alert
+              type='error'
+              title='Ошибка'
+              description={errorPopup.message}
+              open={Boolean(errorPopup)}
+              onClose={handlePopupClose}
+            />
+          )}
         </form>
       </div>
     </div>

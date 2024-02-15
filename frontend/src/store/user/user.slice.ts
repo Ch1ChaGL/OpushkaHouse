@@ -48,15 +48,14 @@ export const userSlice = createSlice({
       .addCase(login.rejected, (state, { payload }: any) => {
         state.isLoading = false;
         state.user = null;
-        state.error = payload.response.data.message;
+        state.error = payload.response?.data.message || payload.message;
       })
       .addCase(checkAuth.fulfilled, (state, { payload }) => {
         state.user = payload.user;
       })
       .addCase(checkAuth.rejected, (state, { payload }: any) => {
         state.isLoading = false;
-        state.user = null;
-        state.error = payload.response.data.message; // Extracting and storing only the error message
+        state.user = null; // Extracting and storing only the error message
       })
       .addCase(logout.pending, state => {
         state.user = null;

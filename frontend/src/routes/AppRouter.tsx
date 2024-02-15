@@ -1,6 +1,7 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
 import {
   adminRoute,
+  authRoute,
   housemaidRoute,
   housemanRoute,
   publicRoute,
@@ -12,6 +13,14 @@ function AppRouter() {
   const { user } = useTypedSelector(state => state.user);
   return (
     <Routes>
+      {user &&
+        authRoute.map(route => (
+          <Route
+            key={route.path}
+            path={route.path}
+            element={<route.component />}
+          />
+        ))}
       {/* {user?.roleId === 1 &&
         adminRoute.map(route => (
           <Route key={route} path={route.path} element={route.component} />
