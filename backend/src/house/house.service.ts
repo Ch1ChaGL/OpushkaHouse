@@ -139,6 +139,7 @@ export class HouseService {
             status: true,
           },
         },
+        houseType: true,
       },
     });
 
@@ -161,15 +162,14 @@ export class HouseService {
             },
           },
         },
+        houseType: true,
       },
       orderBy: {
         houseId: 'asc', // Сортировка по возрастанию id
       },
     });
 
-    return {
-      houseData: this.transformedData(houseData),
-    };
+    return this.transformedData(houseData);
   }
 
   async getHousemanInformation() {
@@ -186,21 +186,22 @@ export class HouseService {
             },
           },
         },
+        houseType: true,
       },
     });
 
-    return {
-      houseData: this.transformedData(houseData),
-    };
+    return this.transformedData(houseData);
   }
 
   private transformedData = houseData =>
     houseData.map(house => ({
       houseId: house.houseId,
       name: house.name,
+      houseType: house.houseType,
       peopleCount: house.peopleCount,
       houseStatus: house.houseStatus.map(houseStatus => ({
         statusId: houseStatus.status.statusId,
+        placeId: houseStatus.placeId,
         timeStart: houseStatus.timeStart,
         timeEnd: houseStatus.timeEnd,
         name: houseStatus.status.name,

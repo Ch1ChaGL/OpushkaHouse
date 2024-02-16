@@ -77,7 +77,13 @@ export class HouseController {
 
   //!Разделение на разные эндпоинты для огрничения возможности ролей или проверка роли через декоратор
   @Put('updateStatus')
-  async updateStatus(dto: HouseStatusDto) {
-    
+  async updateStatus(@Body() dto: HouseStatusDto) {
+    await this.houseService.updateHouseStatus(
+      +dto.houseId,
+      +dto.statusId,
+      +dto.placeId,
+      dto.timeStart,
+      dto.timeEnd,
+    );
   }
 }

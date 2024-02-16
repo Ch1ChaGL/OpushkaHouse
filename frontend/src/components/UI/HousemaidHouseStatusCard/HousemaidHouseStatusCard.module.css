@@ -1,0 +1,60 @@
+.houseId {
+  padding: 25px;
+  border: 5px solid var(--navyBlue);
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 25px;
+}
+
+.container {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+}
+.container.active {
+  opacity: 40%;
+}
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.houseStatus {
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+.houseInformation,
+.houseInterval {
+  word-break: keep-all;
+  color: var(--grey);
+  font-size: 10px;
+}
+
+.red {
+  color: var(--error);
+}
+
+.blue {
+  color: var(--navyBlue);
+}
+
+@media (min-width: 500px) {
+  .houseStatus {
+    font-size: 17px;
+    margin-bottom: 5px;
+  }
+  .houseInformation,
+  .houseInterval {
+    word-break: keep-all;
+    color: var(--grey);
+    font-size: 15px;
+  }
+}
