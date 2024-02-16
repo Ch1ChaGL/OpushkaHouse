@@ -3,7 +3,7 @@
  * @CleanSite - Чисто на участке
  * @NeedsHouseCleaning - Требует уборки в доме
  * @NeedsSiteCleaning - Требует уборки на участке
- * @NeedsCleaningAndLinenReplacement - Требует уборки с заменой белья
+ * @NeedsCleaningAndLinenReplacement - Жилая уборка
  * @RequiresWetCleaning - Требует влажной уборки
  * @BathhouseLightingRequired - Требуется растопка бани
  * @NoBathhouseLightingRequired - Растопка бани не требуется

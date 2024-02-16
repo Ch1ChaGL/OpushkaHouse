@@ -49,10 +49,13 @@ html {
 .wrapper {
   padding: 0px 10px;
   height: 100%;
-}
-.container {
+  display: flex;
   max-width: 1300px;
   margin: 0 auto;
+  flex-direction: column;
+}
+.container {
+  flex: 1 1 auto;
 }
 
 #root {

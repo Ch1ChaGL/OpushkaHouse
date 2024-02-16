@@ -1,8 +1,4 @@
-import {
-  Controller,
-  Get,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Auth } from 'src/auth/decorators/auth.decorators';
 
@@ -14,13 +10,13 @@ import { RolesGuard } from 'src/decorators/roles.guard';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  // @Auth()
-  // @Roles(RoleType.Admin)
-  // @UseGuards(RolesGuard)
+  @Auth()
+  @Roles(RoleType.Admin)
+  @UseGuards(RolesGuard)
   @Get('all')
   async getAllUsers() {
     return this.userService.getAllUsers();
   }
 
-  //TODO Создать получение активности пользователя и пользователей и их входов  
+  //TODO Создать получение активности пользователя и пользователей и их входов
 }

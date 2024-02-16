@@ -3,7 +3,7 @@ import Button from '../Button/Button';
 import { useWorkShift } from '../../../hooks/useWorkShift';
 import { useActions } from '../../../hooks/useActions';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
-import { useUserWorkShiftInformation } from '../../../hooks/useUserWorkShiftInformation';
+import { useUserWorkShiftInformation } from '../../../hooks/user/useUserWorkShiftInformation';
 
 const Header = () => {
   const workShift = useWorkShift();

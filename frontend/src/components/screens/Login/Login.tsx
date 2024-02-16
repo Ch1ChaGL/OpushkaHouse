@@ -21,14 +21,13 @@ const Login = () => {
   const user = useTypedSelector(state => state.user);
 
   useEffect(() => {
-    console.log('я тут');
     if (user.user) navigate('/', { replace: true });
 
     if (user.error !== null) {
       setErrorPopup({ title: 'Произошла ошибка', message: user.error });
       clearError();
     }
-  }, [user, navigate]);
+  }, [user, navigate, clearError]);
 
   const handlePopupClose = () => {
     setErrorPopup(null);

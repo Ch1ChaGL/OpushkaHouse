@@ -1,11 +1,5 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
-import {
-  adminRoute,
-  authRoute,
-  housemaidRoute,
-  housemanRoute,
-  publicRoute,
-} from './index';
+import { adminRoute, authRoute, publicRoute } from './index';
 import { useTypedSelector } from '../hooks/useTypedSelector';
 import { LOGIN_ROUTE } from '../utils/consts/route.const';
 import MainLayout from '../components/layout/MainLayout';
@@ -19,14 +13,26 @@ function AppRouter() {
           <Route
             key={route.path}
             path={route.path}
-            element={<MainLayout><route.component /></MainLayout>}
+            element={
+              <MainLayout>
+                <route.component />
+              </MainLayout>
+            }
           />
         ))}
-      {/* {user?.roleId === 1 &&
+      {user?.roleId === 1 &&
         adminRoute.map(route => (
-          <Route key={route} path={route.path} element={route.component} />
+          <Route
+            key={route.path}
+            path={route.path}
+            element={
+              <MainLayout>
+                <route.component />
+              </MainLayout>
+            }
+          />
         ))}
-      {user?.roleId === 2 &&
+      {/* {user?.roleId === 2 &&
         housemaidRoute.map(route => (
           <Route key={route.path} path={route.path} element={route.component} />
         ))}

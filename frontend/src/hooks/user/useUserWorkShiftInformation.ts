@@ -1,5 +1,5 @@
-import { IUserState } from '../store/user/user.interface';
-import { UserRole } from '../types/user/user.interaface';
+import { IUserState } from '../../store/user/user.interface';
+import { UserRole } from '../../types/user/user.interaface';
 
 export const useUserWorkShiftInformation = (
   user: IUserState | null,

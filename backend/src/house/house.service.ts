@@ -33,6 +33,8 @@ export class HouseService {
           house[HousemaidFileColumn.Busy][1] &&
         house[HousemaidFileColumn.Busy][1] !== 1
       ) {
+        console.log('house', house);
+        continue;
         const amountDay = house[HousemaidFileColumn.Busy][1];
         let timeStart = null;
         let timeEnd = null;
@@ -42,6 +44,7 @@ export class HouseService {
         }
         if (amountDay < 3) {
           houseStatus = HouseStatus.RequiresWetCleaning;
+          //continue;
         }
 
         await this.updateHouseStatus(

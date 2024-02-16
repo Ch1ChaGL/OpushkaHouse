@@ -6,9 +6,23 @@ import { PrismaService } from 'src/prisma.service';
 export class UserService {
   constructor(private prisma: PrismaService) {}
   async getAllUsers() {
-    const data = await this.prisma.user.findMany();
-    return {
-      users: data,
-    };
+    const users = await this.prisma.user.findMany({
+      select: {
+        userId: true,
+        firstName: true,
+        lastName: true,
+        phone: true,
+        createdAt: true,
+        updatedAt: true,
+        role: {
+          select: {
+            roleId: true,
+            name: true, // Выбираем только поле "name" из роли
+          },
+        },
+      },
+    });
+
+    return users;
   }
 }

@@ -1,4 +1,4 @@
-import { ComponentType, FC, ReactNode } from 'react';
+import { FC } from 'react';
 import { LOGIN_ROUTE, REGISTRATION_ROUTE } from '../utils/consts/route.const';
 import Auth from '../pages/Auth/Auth';
 import Home from '../pages/Home/Home';
@@ -25,7 +25,7 @@ export const publicRoute: IRoutes[] = [
 export const adminRoute = [
   {
     path: REGISTRATION_ROUTE,
-    component: Auth,
+    component: Home,
   },
 ];
 export const housemaidRoute = [];
