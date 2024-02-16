@@ -44,7 +44,13 @@ export class HouseService {
           houseStatus = HouseStatus.RequiresWetCleaning;
         }
 
-        await this.updateHouseStatus(houseId, houseStatus, Place.House, timeStart, timeEnd);
+        await this.updateHouseStatus(
+          houseId,
+          houseStatus,
+          Place.House,
+          timeStart,
+          timeEnd,
+        );
         continue;
       }
 
@@ -54,31 +60,37 @@ export class HouseService {
       let timeEnd = null;
 
       //Заезд
-      if (!LeaveTime && MoveInTime){
+      if (!LeaveTime && MoveInTime) {
         timeStart = null;
         timeEnd = house[HousemaidFileColumn.MoveIn];
-      } 
+      }
 
       //Выезд
       if (LeaveTime && !MoveInTime) {
         timeStart = house[HousemaidFileColumn.Leave];
         timeEnd = null;
-      };
+      }
 
       //Выезд-Заезд
-      if (LeaveTime && MoveInTime){
+      if (LeaveTime && MoveInTime) {
         timeStart = house[HousemaidFileColumn.Leave];
         timeEnd = house[HousemaidFileColumn.MoveIn];
-      } 
+      }
 
       await this.updateHouseStatus(
         houseId,
         HouseStatusTypeId,
         Place.House,
         timeStart,
-        timeEnd
+        timeEnd,
       );
-      await this.updateHouseStatus(houseId, SiteStatusTypeId, Place.Site, timeStart, timeEnd);
+      await this.updateHouseStatus(
+        houseId,
+        SiteStatusTypeId,
+        Place.Site,
+        timeStart,
+        timeEnd,
+      );
     }
   }
 
@@ -149,6 +161,9 @@ export class HouseService {
             },
           },
         },
+      },
+      orderBy: {
+        houseId: 'asc', // Сортировка по возрастанию id
       },
     });
 

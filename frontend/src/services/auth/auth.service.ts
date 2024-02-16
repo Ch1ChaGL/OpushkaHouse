@@ -17,7 +17,6 @@ export const AuthService = {
   },
 
   async getNewToken() {
-    console.log('TOKEN', getAccessToken());
     const response = await instance<IAuthResponse>(
       createRequestConfig(
         HttpMethods.POST,

@@ -1,9 +1,14 @@
-import React from 'react'
+import React from 'react';
+import { useHousemaidHouseStatus } from '../../../hooks/useHouseStatus';
+import Loader from '../../UI/Loader/Loader';
 
 const HousemaidHomeScreen = () => {
-  return (
-    <div>HousemaidHomeScreen</div>
-  )
-}
+  const { data, isFetching } = useHousemaidHouseStatus();
 
-export default HousemaidHomeScreen
+  if (isFetching) return <Loader />;
+  console.log(data);
+  
+  return <div></div>;
+};
+
+export default HousemaidHomeScreen;

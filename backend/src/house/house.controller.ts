@@ -59,7 +59,7 @@ export class HouseController {
   @HttpCode(200)
   @Roles(RoleType.Admin)
   @UseGuards(RolesGuard)
-  @Post('house')
+  @Post('create')
   async createHouse(@Body() dto: HouseCreateDto) {}
 
   @Post('updateFromExcel')
