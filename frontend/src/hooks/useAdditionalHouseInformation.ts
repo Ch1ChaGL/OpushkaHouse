@@ -16,8 +16,18 @@ export const useTimeInterval = (
 export const useFormatDate = (time: string | null) => {
   if (!time) return '-';
   const date = new Date(time);
+
+  // Получаем время в часах, минутах и секундах по московскому времени
+  const mskTime = new Date(
+    date.toLocaleString('en-US', { timeZone: 'Europe/Moscow' }),
+  );
+
   const day = date.getDate().toString().padStart(2, '0');
   const month = (date.getMonth() + 1).toString().padStart(2, '0');
   const year = date.getFullYear().toString().slice(2);
-  return `${day}.${month}.${year}`;
+  const hours = mskTime.getHours().toString().padStart(2, '0');
+  const minutes = mskTime.getMinutes().toString().padStart(2, '0');
+  const seconds = mskTime.getSeconds().toString().padStart(2, '0');
+
+  return `${day}.${month}.${year} ${hours}:${minutes}`;
 };

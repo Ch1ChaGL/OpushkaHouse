@@ -8,6 +8,7 @@ import {
 } from './index';
 import { useTypedSelector } from '../hooks/useTypedSelector';
 import { LOGIN_ROUTE } from '../utils/consts/route.const';
+import MainLayout from '../components/layout/MainLayout';
 
 function AppRouter() {
   const { user } = useTypedSelector(state => state.user);
@@ -18,7 +19,7 @@ function AppRouter() {
           <Route
             key={route.path}
             path={route.path}
-            element={<route.component />}
+            element={<MainLayout><route.component /></MainLayout>}
           />
         ))}
       {/* {user?.roleId === 1 &&

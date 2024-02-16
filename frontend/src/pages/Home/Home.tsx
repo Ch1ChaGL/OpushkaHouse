@@ -31,7 +31,6 @@ const Home = () => {
   return (
     <div className='container'>
       <div className={styles.container}>
-        <Header />
         <div className={styles.content}>{roleComponent}</div>
       </div>
     </div>

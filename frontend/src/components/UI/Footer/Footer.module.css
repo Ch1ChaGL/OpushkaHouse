@@ -1,0 +1,11 @@
+.container {
+  padding: 15px 0px;
+  opacity: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.link {
+  color: var(--error);
+}
