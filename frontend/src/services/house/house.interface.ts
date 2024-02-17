@@ -18,3 +18,7 @@ export interface IHousemaidHouseStatus {
   name: string | null;
   roleId: number | null;
 }
+
+export interface IAdminHouseStatus {
+  
+}
