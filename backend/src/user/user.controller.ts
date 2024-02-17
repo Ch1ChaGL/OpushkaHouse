@@ -1,4 +1,12 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { Auth } from 'src/auth/decorators/auth.decorators';
 
@@ -18,5 +26,10 @@ export class UserController {
     return this.userService.getAllUsers();
   }
 
+  @HttpCode(200)
+  @Delete(':id')
+  async deleteUser(@Param('id') userId: string) {
+    return this.userService.deleteUser(+userId);
+  }
   //TODO Создать получение активности пользователя и пользователей и их входов
 }

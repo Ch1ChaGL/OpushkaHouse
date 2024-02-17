@@ -1,0 +1,32 @@
+.error {
+  color: var(--error);
+}
+.formControl {
+  width: 100%;
+}
+
+.inputLabel {
+  color: #236092;
+}
+
+.select {
+  color: #236092;
+  border-radius: 10px;
+}
+
+.select:hover {
+  border-color: #236092;
+  border-width: 3.5px;
+}
+
+.select.Mui-focused {
+  border-color: #3f88c4;
+}
+
+.menuItem {
+  color: #236092;
+}
+
+.error {
+  color: red;
+}

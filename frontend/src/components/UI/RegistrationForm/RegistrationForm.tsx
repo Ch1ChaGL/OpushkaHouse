@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './RegistrationForm.module.css';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IUserCreate } from '../../../services/user/user.interface';
 import Field from '../input/Field';
-import { Modal, Box, TextField, MenuItem } from '@mui/material';
+import { Modal } from '@mui/material';
 import Button from '../Button/Button';
+import SelectField from '../Select/SelectField';
+import { useUser } from '../../../hooks/user/useUser';
+import Alert from '../Alert/Alert';
 
 interface RegistrationFormProps {
   showModal: boolean; // Пропс для отображения модального окна
@@ -15,6 +18,23 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   showModal,
   handleCloseModal,
 }) => {
+  const [errorPopup, setErrorPopup] = useState<{
+    title: string;
+    message: string;
+  } | null>(null);
+
+  const onSuccess = () => {
+    reset();
+    handleCloseModal(); // Закрытие модального окна после отправки формы
+  };
+
+  const onError = (error: any) => {
+    reset();
+    setErrorPopup(error);
+  };
+
+  const mutate = useUser(onError, onSuccess);
+
   const {
     register,
     handleSubmit,
@@ -25,8 +45,13 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   });
 
   const onSubmit: SubmitHandler<IUserCreate> = data => {
-    console.log(data); // Обработка отправки формы
-    handleCloseModal(); // Закрытие модального окна после отправки формы
+    data.roleId = +data.roleId;
+    mutate.mutate(data);
+  };
+
+  const handlePopupClose = () => {
+    setErrorPopup(null);
+    // Assuming you have a clearError action in your useActions hook
   };
 
   return (
@@ -73,17 +98,19 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
               })}
               error={errors.password?.message}
             />
-            <TextField
-              select
+            <SelectField
+              register={register('roleId', {
+                required: 'Роль обязательное поле',
+              })}
               label='Роль'
-              variant='outlined'
-              fullWidth
-              {...register('roleId', { required: true })}
-            >
-              <MenuItem value={1}>Администратор</MenuItem>
-              <MenuItem value={2}>Горничная</MenuItem>
-              <MenuItem value={3}>Хаусмен</MenuItem>
-            </TextField>
+              name='Роль'
+              options={[
+                { value: 1, label: 'Администратор' },
+                { value: 2, label: 'Горничная' },
+                { value: 3, label: 'Хаусмен' },
+              ]}
+              error={errors.roleId?.message}
+            />
           </div>
           <div className={styles.btn}>
             <Button type='submit' text='Создать' />
@@ -95,6 +122,15 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
             />
           </div>
         </form>
+        {errorPopup && (
+          <Alert
+            type='error'
+            title='Ошибка'
+            description={errorPopup.message}
+            open={Boolean(errorPopup)}
+            onClose={handlePopupClose}
+          />
+        )}
       </div>
     </Modal>
   );

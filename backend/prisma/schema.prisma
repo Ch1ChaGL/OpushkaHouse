@@ -8,71 +8,71 @@ datasource db {
 }
 
 model Role {
-  roleId Int @map("role_id") @id
-  name String 
-  users User[]
+  roleId Int      @id @map("role_id")
+  name   String
+  users  User[]
   status Status[]
 }
 
 model User {
-  userId Int @id @default(autoincrement()) @map("user_id")
-  password String @map("password")
-  firstName String @map("first_name")
-  lastName String @map("last_name")
-  phone String @unique @map("phone")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  roleId Int @map("role_id")
-  role Role @relation(fields: [roleId], references: [roleId])
+  userId    Int        @id @default(autoincrement()) @map("user_id")
+  password  String     @map("password")
+  firstName String     @map("first_name")
+  lastName  String     @map("last_name")
+  phone     String     @unique @map("phone")
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
+  roleId    Int        @map("role_id")
+  role      Role       @relation(fields: [roleId], references: [roleId], onDelete: Cascade, onUpdate: Cascade)
   loginLogs LoginLog[]
 }
 
 model HouseType {
-  houseTypeId Int @id @map("house_id")
-  name String
-  houses House[]
+  houseTypeId Int     @id @map("house_id")
+  name        String
+  houses      House[]
 }
 
-
 model House {
-  houseId      Int          @id @map("house_id")
-  houseTypeId  Int          @map("house_type_id")
-  peopleCount  Int          @map("people_count")
-  houseStatus  HouseStatus[]
-  houseType    HouseType    @relation(fields: [houseTypeId], references: [houseTypeId])
+  houseId     Int           @id @map("house_id")
+  houseTypeId Int           @map("house_type_id")
+  peopleCount Int           @map("people_count")
+  houseStatus HouseStatus[]
+  houseType   HouseType     @relation(fields: [houseTypeId], references: [houseTypeId], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Status {
-  statusId     Int          @id @map("status_id")
-  name         String
-  roleId       Int          @map("role_id")
-  houseStatus  HouseStatus[]
-  role         Role         @relation(fields: [roleId], references: [roleId])
+  statusId    Int           @id @map("status_id")
+  name        String
+  roleId      Int           @map("role_id")
+  houseStatus HouseStatus[]
+  role        Role          @relation(fields: [roleId], references: [roleId], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model HouseStatus {
-  houseId      Int          @map("house_id")
-  statusId     Int          @map("status_id")
-  timeStart    DateTime?     
-  timeEnd      DateTime?     
-  house        House        @relation(fields: [houseId], references: [houseId])
-  status       Status       @relation(fields: [statusId], references: [statusId])
-  placeId      Int          @map("place_id")
-  place        Place        @relation(fields: [placeId], references: [placeId])
+  houseId   Int       @map("house_id")
+  statusId  Int       @map("status_id")
+  timeStart DateTime?
+  timeEnd   DateTime?
+  house     House     @relation(fields: [houseId], references: [houseId], onDelete: Cascade, onUpdate: Cascade)
+  status    Status    @relation(fields: [statusId], references: [statusId], onDelete: Cascade, onUpdate: Cascade)
+  placeId   Int       @map("place_id")
+  place     Place     @relation(fields: [placeId], references: [placeId], onDelete: Cascade, onUpdate: Cascade)
+
   @@id([houseId, statusId])
 }
 
 model Place {
-  placeId Int   @map("place_id") @id
-  name    String
+  placeId       Int           @id @map("place_id")
+  name          String
   houseStatuses HouseStatus[]
 }
 
-model LoginLog{
-  id         Int       @id @default(autoincrement())
-  userId     Int
-  username   String
-  action     String    // "login" или "logout"
-  timestamp  DateTime  @default(now())
-  user       User      @relation(fields: [userId], references: [userId])
+model LoginLog {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  username  String
+  action    String // "login" или "logout"
+  timestamp DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [userId], onDelete: Cascade, onUpdate: Cascade)
 }
