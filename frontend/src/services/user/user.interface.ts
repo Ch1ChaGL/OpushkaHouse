@@ -10,3 +10,11 @@ export interface IUserResponse {
     name: string;
   };
 }
+
+export interface IUserCreate {
+  phone: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  roleId: number;
+}

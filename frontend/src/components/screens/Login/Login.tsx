@@ -1,6 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import styles from './Login.module.css';
-import { ILoginData } from '../../../store/user/user.interface';
+import { ILoginData, IRegisterData } from '../../../store/user/user.interface';
 import Field from '../../UI/input/Field';
 import { Button } from '@mui/material';
 import PasswordInput from '../../UI/InputMui/PasswordInput/PasswordInput';

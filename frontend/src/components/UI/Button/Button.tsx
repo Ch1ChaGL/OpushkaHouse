@@ -4,10 +4,13 @@ import styles from './Button.module.css';
 
 interface IButtonProps {
   text: string;
+  type?: 'submit' | 'reset' | 'button';
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  color?: string;
+  hover?: string;
 }
 
-const Button: FC<IButtonProps> = ({ text, onClick }) => {
+const Button: FC<IButtonProps> = ({ text, onClick, type, color, hover }) => {
   return (
     <div className={styles.container}>
       <ButtonMUI
@@ -17,11 +20,12 @@ const Button: FC<IButtonProps> = ({ text, onClick }) => {
         sx={{
           padding: '5px 25px',
           color: '#fff', // Задаем цвет текста
-          bgcolor: '#236092', // Задаем цвет фона
+          bgcolor: `${color ? color : '#236092'}`, // Задаем цвет фона
           '&:hover': {
-            bgcolor: '#1a4970', // Задаем цвет фона при наведении
+            bgcolor: `${hover ? hover : '#1a4970'}`, // Задаем цвет фона при наведении
           },
         }}
+        type={type}
       >
         {text}
       </ButtonMUI>
