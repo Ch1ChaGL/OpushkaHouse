@@ -1,0 +1,76 @@
+.container {
+  margin: 20px 0px;
+  padding: 20px;
+}
+
+.card {
+  transition: all 0.3s ease;
+}
+
+@media (hover: hover) {
+  .card:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@media (hover: none) {
+  .card:hover {
+  }
+}
+.status__title {
+  color: var(--navyBlue);
+  font-weight: 700;
+}
+
+.status__row div:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.houseId {
+  padding: 25px;
+  border: 5px solid var(--navyBlue);
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 25px;
+  flex: 0 0 30px;
+}
+.card__row {
+  display: flex;
+  gap: 20px;
+}
+
+.housemaidStatus {
+  flex: 0 1 400px;
+}
+.housemanStatus {
+  width: 100%;
+}
+.housemanStatus__body {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.housemanStatus__card,
+.housemaidStatus__card {
+  /* flex: 0 1 250px; */
+}
+
+@media (max-width: 600px) {
+  .card__row {
+    display: flex;
+    flex-direction: column;
+  }
+  .houseId {
+    align-self: center;
+  }
+}
+
+.btn {
+  margin-left: auto;
+}

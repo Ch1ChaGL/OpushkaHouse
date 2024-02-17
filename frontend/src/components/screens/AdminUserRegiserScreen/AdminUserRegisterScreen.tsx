@@ -51,7 +51,7 @@ const AdminUserRegisterScreen = () => {
           <MenuItem value={-1}>Все</MenuItem>
           <MenuItem value={1}>Администраторы</MenuItem>
           <MenuItem value={2}>Горничные</MenuItem>
-          <MenuItem value={3}>Хаусманы</MenuItem>
+          <MenuItem value={3}>Хаусмены</MenuItem>
         </Select>
       </div>
       <ul className={styles.userList}>

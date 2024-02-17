@@ -19,7 +19,12 @@ export const useHousemiadHouseStatusMutate = () => {
       houseId: number;
       placeId: number;
       statusId: number;
-    }) => HouseService.updateHousemaidStatus(data.houseId, data.placeId, data.statusId),
+    }) =>
+      HouseService.updateHousemaidStatus(
+        data.houseId,
+        data.placeId,
+        data.statusId,
+      ),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [`get housemaid house status`],
@@ -28,4 +33,14 @@ export const useHousemiadHouseStatusMutate = () => {
   });
 
   return mutation;
+};
+
+export const useAdminHouseStatus = () => {
+  const { data, isError, isSuccess, isFetching } = useQuery({
+    queryKey: ['get admin house status'],
+    initialData: [],
+    queryFn: () => HouseService.getAdminStatus(),
+  });
+
+  return { data, isFetching, isError, isSuccess };
 };

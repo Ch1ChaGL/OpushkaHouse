@@ -12,7 +12,7 @@ export interface IHouseType {
 
 export interface IHousemaidHouseStatus {
   statusId: number;
-  placeId: number;
+  place: IPlace;
   timeStart: string | null;
   timeEnd: string | null;
   name: string | null;
@@ -20,5 +20,22 @@ export interface IHousemaidHouseStatus {
 }
 
 export interface IAdminHouseStatus {
-  
+  houseId: number;
+  houseType: IHouseType;
+  peopleCount: number;
+  houseStatus: IHouseStatus[];
+}
+
+export interface IPlace {
+  placeId: number;
+  name: string;
+}
+
+export interface IHouseStatus {
+  statusId: number;
+  place: IPlace;
+  timeStart: string | null;
+  timeEnd: string | null;
+  name: string;
+  roleId: number;
 }

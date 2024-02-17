@@ -2,7 +2,10 @@ import { HouseStatus } from '../../consts/HouseStatus.const';
 import { instance } from '../api/api.interceptors';
 import { HttpMethods, createRequestConfig } from '../service.config';
 import { HouseEndPoint, HouseEndPointsMap } from './house.config';
-import { IHousemaidHouseInformation } from './house.interface';
+import {
+  IAdminHouseStatus,
+  IHousemaidHouseInformation,
+} from './house.interface';
 
 export const HouseService = {
   async getHousemaidStatus() {
@@ -26,6 +29,17 @@ export const HouseService = {
         HttpMethods.PUT,
         HouseEndPointsMap[HouseEndPoint.UPDATE_HOUSE],
         { houseId, placeId, statusId },
+      ),
+    );
+
+    return response.data;
+  },
+
+  async getAdminStatus() {
+    const response = await instance<IAdminHouseStatus[]>(
+      createRequestConfig(
+        HttpMethods.GET,
+        HouseEndPointsMap[HouseEndPoint.ALL],
       ),
     );
 

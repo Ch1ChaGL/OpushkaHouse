@@ -140,15 +140,17 @@ export class HouseService {
         houseStatus: {
           include: {
             status: true,
+            place: true,
           },
         },
         houseType: true,
       },
+      orderBy: {
+        houseId: 'asc', // Сортировка по возрастанию id
+      },
     });
 
-    return {
-      houseData: this.transformedData(houseData),
-    };
+    return this.transformedData(houseData);
   }
 
   async getHousemaidInformation() {
@@ -188,6 +190,9 @@ export class HouseService {
               roleId: 3,
             },
           },
+          orderBy: {
+            statusId: 'asc',
+          },
         },
         houseType: true,
       },
@@ -208,6 +213,7 @@ export class HouseService {
         timeStart: houseStatus.timeStart,
         timeEnd: houseStatus.timeEnd,
         name: houseStatus.status.name,
+        place: houseStatus.place,
         roleId: houseStatus.status.roleId,
       })),
     }));

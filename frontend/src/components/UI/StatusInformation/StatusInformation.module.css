@@ -1,0 +1,11 @@
+.place {
+  color: #397fb9;
+  font-weight: 500;
+}
+
+@media (max-width: 600px) {
+  .name,
+  .time {
+    font-size: 13px;
+  }
+}

@@ -17,7 +17,7 @@ const UserCard: React.FC<IUserResponse> = ({
 
   const mutate = useUserDelete();
   return (
-    <Card variant='outlined'>
+    <Card variant='outlined' className={styles.card}>
       <CardContent>
         <Typography variant='h5' component='h2'>
           {firstName} {lastName}

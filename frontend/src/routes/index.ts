@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { LOGIN_ROUTE, REGISTRATION_ROUTE } from '../utils/consts/route.const';
+import { LOGIN_ROUTE, REGISTRATION_ROUTE } from '../consts/route.const';
 import Auth from '../pages/Auth/Auth';
 import Home from '../pages/Home/Home';
 

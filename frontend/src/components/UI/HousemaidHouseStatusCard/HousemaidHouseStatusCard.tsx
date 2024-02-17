@@ -52,7 +52,7 @@ const HousemaidHouseStatusCard = (data: IHousemaidHouseInformation) => {
           onClick={() =>
             mutate.mutate({
               houseId: data.houseId,
-              placeId: data.houseStatus[0].placeId,
+              placeId: data.houseStatus[0].place.placeId,
               statusId:
                 data.houseStatus[0].statusId !== HouseStatus.NeedCheckCleanHouse
                   ? HouseStatus.NeedCheckCleanHouse

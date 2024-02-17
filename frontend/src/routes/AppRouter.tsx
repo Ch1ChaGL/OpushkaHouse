@@ -1,7 +1,7 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { adminRoute, authRoute, publicRoute } from './index';
 import { useTypedSelector } from '../hooks/useTypedSelector';
-import { LOGIN_ROUTE } from '../utils/consts/route.const';
+import { LOGIN_ROUTE } from '../consts/route.const';
 import MainLayout from '../components/layout/MainLayout';
 
 function AppRouter() {

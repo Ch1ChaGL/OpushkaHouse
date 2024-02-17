@@ -2,6 +2,7 @@ import { Tab, Tabs, useMediaQuery, useTheme } from '@mui/material';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import React, { useMemo } from 'react';
 import AdminUserRegisterScreen from '../AdminUserRegiserScreen/AdminUserRegisterScreen';
+import HouseAdminList from '../../UI/HouseAdminList/HouseAdminList';
 
 const AdminHomeScreen = () => {
   const location = useLocation();
@@ -65,7 +66,7 @@ const AdminHomeScreen = () => {
 
       {/* Отображаемый компонент зависит от текущего маршрута */}
       {location.pathname === '/registration' && <AdminUserRegisterScreen />}
-      {location.pathname === '/' && <div>Дома</div>}
+      {location.pathname === '/' && <HouseAdminList />}
       {/* Здесь должен быть компонент для маршрута Settings */}
     </>
   );
