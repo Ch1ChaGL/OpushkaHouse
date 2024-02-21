@@ -1,5 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { HouseService } from '../services/house/house.service';
+import {
+  IHouseInformation,
+  IHouseStatus,
+} from '../services/house/house.interface';
 
 export const useHousemaidHouseStatus = () => {
   const { data, isError, isSuccess, isFetching } = useQuery({
@@ -40,6 +44,16 @@ export const useAdminHouseStatus = () => {
     queryKey: ['get admin house status'],
     initialData: [],
     queryFn: () => HouseService.getAdminStatus(),
+  });
+
+  return { data, isFetching, isError, isSuccess };
+};
+
+export const useHouseStatusById = (houseId: number) => {
+  const { data, isError, isSuccess, isFetching } = useQuery({
+    queryKey: [`get house status ${houseId}`],
+    initialData: {} as IHouseInformation,
+    queryFn: () => HouseService.getHouseStatusById(houseId),
   });
 
   return { data, isFetching, isError, isSuccess };

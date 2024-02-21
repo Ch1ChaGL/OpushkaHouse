@@ -21,7 +21,7 @@ export const HouseService = {
   },
 
   async getHouseStatusById(houseId: number) {
-    const response = await instance<IHouseInformation[]>(
+    const response = await instance<IHouseInformation>(
       createRequestConfig(
         HttpMethods.GET,
         HouseEndPointsMap[HouseEndPoint.HOUSE_INFORMATION_BY_ID],

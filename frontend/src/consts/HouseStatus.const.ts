@@ -1,3 +1,6 @@
+import { IPlace } from '../services/house/house.interface';
+import { PlaceType } from './PlaceType.const';
+
 /**
  * @CleanHouse - Чисто в доме
  * @CleanSite - Чисто на участке
@@ -21,7 +24,7 @@ export enum HouseStatus {
   CleanSite = 2, //'Чисто на участке'
   NeedsHouseCleaning = 3, //'Требует уборки в доме'
   NeedsSiteCleaning = 4, //'Требует уборки на участке'
-  NeedsCleaningAndLinenReplacement = 5, //'Требует уборки с заменой белья'
+  NeedsCleaningAndLinenReplacement = 5, //'Жилая уборка по запросу'
   RequiresWetCleaning = 6, //'Требует влажной уборки'
   BathhouseLightingRequired = 7, //'Требуется растопка бани'
   NoBathhouseLightingRequired = 8, //'Растопка бани не требуется'
@@ -32,5 +35,32 @@ export enum HouseStatus {
   NeedCheckCleanHouse = 13,
   NeedCheckCleanSite = 14,
   NeedChekBathhous = 15,
+  NeedChekHotTub = 16,
+}
+
+export enum HousePlaceStatus {
+  CleanHouse = 1,
+  NeedsHouseCleaning = 3,
+  NeedsCleaningAndLinenReplacement = 5,
+  NeedCheckCleanHouse = 13,
+}
+
+export enum SitePlaceStatus {
+  CleanSite = 2, //'Чисто на участке'
+  NeedsSiteCleaning = 4, //'Требует уборки на участке'
+  NeedCheckCleanSite = 14,
+}
+
+export enum BathhousePlaceStatus {
+  BathhouseLightingRequired = 7, //'Требуется растопка бани'
+  NoBathhouseLightingRequired = 8, //'Растопка бани не требуется'
+  BathhouseHeated = 11, //Баня растоплена
+  NeedChekBathhous = 15,
+}
+
+export enum HotTubPlaceStatus {
+  HotTubKindlingRequired = 9, //'Требуется растопка купели'
+  NoHotTubKindlingRequired = 10, //'Растопка купели не требуется'
+  HotTubHeated = 12, //Купель растоплена
   NeedChekHotTub = 16,
 }
