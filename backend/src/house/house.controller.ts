@@ -5,6 +5,7 @@ import {
   Controller,
   Get,
   HttpCode,
+  Param,
   Post,
   Put,
   UploadedFile,
@@ -85,5 +86,11 @@ export class HouseController {
       dto.timeStart,
       dto.timeEnd,
     );
+  }
+
+  @Auth()
+  @Get(':houseId')
+  async getHouseInformationById(@Param('houseId') houseId: string){
+    return this.houseService.getHouseInformationById(+houseId);
   }
 }

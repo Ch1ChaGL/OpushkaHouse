@@ -177,6 +177,36 @@ export class HouseService {
     return this.transformedData(houseData);
   }
 
+  async getHouseInformationById(houseId: number) {
+    const houseInformation = (await this.getAdminHouseInformation()).filter(
+      house => house.houseId === houseId,
+    )[0];
+
+    const housemaidInformation = (await this.getHousemaidInformation()).filter(
+      status => status.houseId === houseId,
+    );
+    const housemanInformation = (await this.getHousemanInformation()).filter(
+      status => status.houseId === houseId,
+    );
+
+    return {
+      houseType: houseInformation.houseType,
+      houseId: houseInformation.houseId,
+      peopleCount: houseInformation.peopleCount,
+      housemaid: this.getFormatedHouseStatus(housemaidInformation),
+      houseman: this.getFormatedHouseStatus(housemanInformation),
+    };
+  }
+
+  private getFormatedHouseStatus(houseStatus: any) {
+    const formatedHouseStatus = [];
+    for (const status of houseStatus) {
+      formatedHouseStatus.push(...status.houseStatus);
+    }
+
+    return formatedHouseStatus;
+  }
+
   async getHousemanInformation() {
     const houseData = await this.prisma.house.findMany({
       //@ts-ignore

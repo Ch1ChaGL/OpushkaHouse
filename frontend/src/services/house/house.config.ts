@@ -2,6 +2,7 @@ const BASE_URL = '/house';
 
 export enum HouseEndPoint {
   ALL,
+  HOUSE_INFORMATION_BY_ID,
   HOUSEMAID_STATUS,
   HOUSEMAN_STATUS,
   CREATE_HOUSE,
@@ -14,4 +15,5 @@ export const HouseEndPointsMap: Record<HouseEndPoint, string> = {
   [HouseEndPoint.HOUSEMAN_STATUS]: `${BASE_URL}/housemanStatus`,
   [HouseEndPoint.CREATE_HOUSE]: `${BASE_URL}/create`,
   [HouseEndPoint.UPDATE_HOUSE]: `${BASE_URL}/updateStatus`,
+  [HouseEndPoint.HOUSE_INFORMATION_BY_ID]: `${BASE_URL}/`,
 };

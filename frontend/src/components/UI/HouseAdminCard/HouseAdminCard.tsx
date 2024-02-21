@@ -2,15 +2,18 @@ import React from 'react';
 import { IAdminHouseStatus } from '../../../services/house/house.interface';
 import { RoleType } from '../../../consts/Role.const';
 import styles from './HouseAdminCard.module.css';
-import { useTimeInterval } from '../../../hooks/useAdditionalHouseInformation';
 import StatusInformation from '../StatusInformation/StatusInformation';
 import { Card } from '@mui/material';
 import Button from '../Button/Button';
+import { useNavigate } from 'react-router-dom';
+import { HOUSE_ROUTE } from '../../../consts/route.const';
 
 const HouseAdminCard = (house: IAdminHouseStatus) => {
   const housemaidStatus = house.houseStatus.filter(
     status => status.roleId === RoleType.Housemaid,
   );
+  const navigate = useNavigate();
+
   const housemanStatus = house.houseStatus
     .filter(status => status.roleId === RoleType.Houseman)
     .sort((a, b) => a.statusId - b.statusId);
@@ -49,7 +52,7 @@ const HouseAdminCard = (house: IAdminHouseStatus) => {
             </div>
           </div>
           <div className={styles.btn}>
-            <Button text='Редактировать' />
+            <Button text='Редактировать' onClick={() => navigate(`${HOUSE_ROUTE}/${house.houseId}`)}/>
           </div>
         </div>
       </div>

@@ -1,7 +1,12 @@
 import { FC } from 'react';
-import { LOGIN_ROUTE, REGISTRATION_ROUTE } from '../consts/route.const';
+import {
+  HOUSE_ROUTE,
+  LOGIN_ROUTE,
+  REGISTRATION_ROUTE,
+} from '../consts/route.const';
 import Auth from '../pages/Auth/Auth';
 import Home from '../pages/Home/Home';
+import House from '../pages/House/House';
 
 interface IRoutes {
   path: string;
@@ -26,6 +31,10 @@ export const adminRoute = [
   {
     path: REGISTRATION_ROUTE,
     component: Home,
+  },
+  {
+    path: HOUSE_ROUTE + '/:id',
+    component: House,
   },
 ];
 export const housemaidRoute = [];
