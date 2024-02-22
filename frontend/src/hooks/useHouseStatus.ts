@@ -16,7 +16,7 @@ export const useHousemaidHouseStatus = () => {
   return { data, isFetching, isError, isSuccess };
 };
 
-export const useHouseStatusMutate = () => {
+export const useHouseStatusMutate = (onSuccessCallback?: () => void) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -26,6 +26,7 @@ export const useHouseStatusMutate = () => {
       statusId: number;
       timeStart?: string | null;
       timeEnd?: string | null;
+      updateTime?: boolean;
     }) =>
       HouseService.updateStatus(
         data.houseId,
@@ -33,8 +34,10 @@ export const useHouseStatusMutate = () => {
         data.statusId,
         data.timeStart,
         data.timeEnd,
+        data.updateTime,
       ),
     onSuccess: () => {
+      onSuccessCallback && onSuccessCallback();
       queryClient.invalidateQueries({
         queryKey: [`get housemaid house status`],
       });

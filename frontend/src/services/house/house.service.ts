@@ -39,12 +39,13 @@ export const HouseService = {
     statusId: number,
     timeStart: string | null = null,
     timeEnd: string | null = null,
+    updateTime: boolean = false,
   ) {
     const response = await instance<void>(
       createRequestConfig(
         HttpMethods.PUT,
         HouseEndPointsMap[HouseEndPoint.UPDATE_HOUSE],
-        { houseId, placeId, statusId, timeStart, timeEnd },
+        { houseId, placeId, statusId, timeStart, timeEnd, updateTime },
       ),
     );
 

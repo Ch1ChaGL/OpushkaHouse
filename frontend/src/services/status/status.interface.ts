@@ -6,6 +6,7 @@ export interface IStatus {
 }
 
 export interface IStatusUpdate {
+  updateTime: boolean;
   houseId: number;
   placeId: number;
   statusId: number;

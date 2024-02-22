@@ -4,4 +4,5 @@ export class HouseStatusDto {
   placeId: number;
   timeStart?: string;
   timeEnd?: string;
+  updateTime: boolean;
 }

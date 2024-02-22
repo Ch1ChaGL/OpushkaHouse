@@ -83,6 +83,7 @@ export class HouseController {
       +dto.houseId,
       +dto.statusId,
       +dto.placeId,
+      dto.updateTime,
       dto.timeStart,
       dto.timeEnd,
     );
@@ -90,7 +91,7 @@ export class HouseController {
 
   @Auth()
   @Get(':houseId')
-  async getHouseInformationById(@Param('houseId') houseId: string){
+  async getHouseInformationById(@Param('houseId') houseId: string) {
     return this.houseService.getHouseInformationById(+houseId);
   }
 }

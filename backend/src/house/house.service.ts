@@ -108,17 +108,25 @@ export class HouseService {
     houseId,
     statusId,
     placeId,
+    updateTime = false,
     timeStart = null,
     timeEnd = null,
   ) {
     timeStart = timeStart ? new Date(timeStart) : null;
     timeEnd = timeEnd ? new Date(timeEnd) : null;
 
-    await this.prisma.houseStatus.updateMany({
-      //@ts-ignore
-      where: { houseId, placeId },
-      data: { statusId, timeStart, timeEnd },
-    });
+    if (updateTime)
+      await this.prisma.houseStatus.updateMany({
+        //@ts-ignore
+        where: { houseId, placeId },
+        data: { statusId, timeStart, timeEnd },
+      });
+    else
+      await this.prisma.houseStatus.updateMany({
+        //@ts-ignore
+        where: { houseId, placeId },
+        data: { statusId },
+      });
   }
 
   async resetHouseStatus(houseId) {

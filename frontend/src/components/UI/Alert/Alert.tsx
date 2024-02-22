@@ -8,6 +8,7 @@ interface AlertProps {
   description: string;
   open: boolean;
   onClose: () => void;
+  color?: string;
 }
 
 const Alert: React.FC<AlertProps> = ({
@@ -16,6 +17,7 @@ const Alert: React.FC<AlertProps> = ({
   description,
   open,
   onClose,
+  color = '#e84900',
 }) => {
   return (
     <Snackbar
@@ -23,9 +25,9 @@ const Alert: React.FC<AlertProps> = ({
       open={open}
       autoHideDuration={3000}
       onClose={onClose}
-      sx={{ color: '#e84900' }}
+      sx={{ color: color }}
     >
-      <AlertMUI onClose={onClose} severity={type} sx={{ color: '#e84900' }}>
+      <AlertMUI onClose={onClose} severity={type} sx={{ color: color }}>
         <AlertTitle>{title}</AlertTitle>
         {description}
       </AlertMUI>

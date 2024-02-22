@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import styles from './RedactStatusCard.module.css';
 import { IHouseStatus } from '../../../services/house/house.interface';
 import { Card, MenuItem, TextField } from '@mui/material';
@@ -19,6 +19,7 @@ import {
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import Button from '../Button/Button';
+import Alert from '../Alert/Alert';
 
 interface IRedactStatusCardProps extends IHouseStatus {
   houseId: number;
@@ -26,26 +27,42 @@ interface IRedactStatusCardProps extends IHouseStatus {
 
 const RedactStatusCard: FC<IRedactStatusCardProps> = status => {
   const { data, isFetching } = useStatusByPlaceId(status.place.placeId);
+  const [success, setSuccess] = useState(false);
+
   const {
     register,
     handleSubmit,
     control,
+    setError,
     formState: { errors },
     reset,
   } = useForm<IStatusUpdate>({
     mode: 'onChange',
   });
 
-  const mutate = useHouseStatusMutate();
+  const mutate = useHouseStatusMutate(() => setSuccess(true));
 
   const onSubmit: SubmitHandler<IStatusUpdate> = value => {
     const updateObject: IStatusUpdate = {
       houseId: status.houseId,
       placeId: status.place.placeId,
       statusId: value.statusId,
+      updateTime: true,
       timeStart: value.timeStart ? value.timeStart : null,
       timeEnd: value.timeEnd ? value.timeEnd : null,
     };
+    if (
+      value.timeStart &&
+      value.timeEnd &&
+      new Date(value.timeStart) > new Date(value.timeEnd)
+    ) {
+      // Устанавливаем ошибку в объекте errors
+      setError('timeStart', {
+        type: 'manual',
+        message: 'Время начала не может быть позже времени окончания',
+      });
+      return; // Прерываем отправку формы
+    }
     mutate.mutate(updateObject);
   };
 
@@ -122,6 +139,7 @@ const RedactStatusCard: FC<IRedactStatusCardProps> = status => {
                 )}
               />
             </div>
+            <div className={styles.error}>{errors.timeStart?.message}</div>
             <div className={styles.btns}>
               <Button type='submit' text='Сохранить' />
               <Button
@@ -131,6 +149,16 @@ const RedactStatusCard: FC<IRedactStatusCardProps> = status => {
                 hover={'#ad3802'}
               />
             </div>
+            {success && (
+              <Alert
+                type='success'
+                title='Успех'
+                description='Информация успешно сохранена'
+                open={success}
+                color='#28a745'
+                onClose={() => setSuccess(false)}
+              />
+            )}
           </form>
         </div>
       </Card>
