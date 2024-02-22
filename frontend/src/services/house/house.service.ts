@@ -20,6 +20,16 @@ export const HouseService = {
     return response.data;
   },
 
+  async getHousemanStatus() {
+    const response = await instance<IHousemaidHouseInformation[]>(
+      createRequestConfig(
+        HttpMethods.GET,
+        HouseEndPointsMap[HouseEndPoint.HOUSEMAN_STATUS],
+      ),
+    );
+
+    return response.data;
+  },
   async getHouseStatusById(houseId: number) {
     const response = await instance<IHouseInformation>(
       createRequestConfig(

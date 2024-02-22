@@ -16,6 +16,16 @@ export const useHousemaidHouseStatus = () => {
   return { data, isFetching, isError, isSuccess };
 };
 
+export const useHousemanHouseStatus = () => {
+  const { data, isError, isSuccess, isFetching } = useQuery({
+    queryKey: ['get houseman house status'],
+    initialData: [],
+    queryFn: () => HouseService.getHousemanStatus(),
+  });
+
+  return { data, isFetching, isError, isSuccess };
+};
+
 export const useHouseStatusMutate = (onSuccessCallback?: () => void) => {
   const queryClient = useQueryClient();
 
