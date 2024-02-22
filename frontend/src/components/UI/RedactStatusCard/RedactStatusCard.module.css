@@ -22,3 +22,7 @@
 .title {
   color: var(--navyBlue);
 }
+
+.field {
+  margin: 10px 0px;
+}
