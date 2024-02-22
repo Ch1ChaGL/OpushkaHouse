@@ -21,9 +21,10 @@ const HousemaidHouseStatusCard = (data: IHousemaidHouseInformation) => {
   return (
     <div
       className={`${styles.container} ${
-        data.houseStatus[0].statusId !== HouseStatus.NeedCheckCleanHouse
-          ? ''
-          : styles.active
+        data.houseStatus[0].statusId === HouseStatus.NeedCheckCleanHouse ||
+        data.houseStatus[0].statusId === HouseStatus.CleanHouse
+          ? styles.active
+          : ''
       }`}
     >
       <div className={styles.content}>
@@ -31,9 +32,11 @@ const HousemaidHouseStatusCard = (data: IHousemaidHouseInformation) => {
         <div className={styles.houseInformations}>
           <div
             className={`${styles.houseStatus} ${
-              data.houseStatus[0].statusId !== HouseStatus.NeedCheckCleanHouse
-                ? styles.red
-                : styles.blue
+              data.houseStatus[0].statusId ===
+                HouseStatus.NeedCheckCleanHouse ||
+              data.houseStatus[0].statusId === HouseStatus.CleanHouse
+                ? styles.blue
+                : styles.red
             }`}
           >
             {data.houseStatus[0].name}
@@ -45,18 +48,21 @@ const HousemaidHouseStatusCard = (data: IHousemaidHouseInformation) => {
       <div className={styles.btn}>
         <ToggleButton
           initialValue={
-            data.houseStatus[0].statusId !== HouseStatus.NeedCheckCleanHouse
-              ? false
-              : true
+            data.houseStatus[0].statusId === HouseStatus.NeedCheckCleanHouse ||
+            data.houseStatus[0].statusId === HouseStatus.CleanHouse
+              ? true
+              : false
           }
           onClick={() =>
             mutate.mutate({
               houseId: data.houseId,
               placeId: data.houseStatus[0].place.placeId,
               statusId:
-                data.houseStatus[0].statusId !== HouseStatus.NeedCheckCleanHouse
-                  ? HouseStatus.NeedCheckCleanHouse
-                  : HouseStatus.NeedsHouseCleaning,
+                data.houseStatus[0].statusId ===
+                  HouseStatus.NeedCheckCleanHouse ||
+                data.houseStatus[0].statusId === HouseStatus.CleanHouse
+                  ? HouseStatus.NeedsHouseCleaning
+                  : HouseStatus.NeedCheckCleanHouse,
             })
           }
         />

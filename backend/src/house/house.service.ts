@@ -111,6 +111,9 @@ export class HouseService {
     timeStart = null,
     timeEnd = null,
   ) {
+    timeStart = timeStart ? new Date(timeStart) : null;
+    timeEnd = timeEnd ? new Date(timeEnd) : null;
+
     await this.prisma.houseStatus.updateMany({
       //@ts-ignore
       where: { houseId, placeId },
