@@ -4,6 +4,7 @@ import {
   IHouseInformation,
   IHouseStatus,
 } from '../services/house/house.interface';
+import { StatusService } from '../services/status/status.service';
 
 export const useHousemaidHouseStatus = () => {
   const { data, isError, isSuccess, isFetching } = useQuery({
@@ -15,7 +16,7 @@ export const useHousemaidHouseStatus = () => {
   return { data, isFetching, isError, isSuccess };
 };
 
-export const useHousemiadHouseStatusMutate = () => {
+export const useHouseStatusMutate = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -23,12 +24,7 @@ export const useHousemiadHouseStatusMutate = () => {
       houseId: number;
       placeId: number;
       statusId: number;
-    }) =>
-      HouseService.updateHousemaidStatus(
-        data.houseId,
-        data.placeId,
-        data.statusId,
-      ),
+    }) => HouseService.updateStatus(data.houseId, data.placeId, data.statusId),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [`get housemaid house status`],
@@ -54,6 +50,16 @@ export const useHouseStatusById = (houseId: number) => {
     queryKey: [`get house status ${houseId}`],
     initialData: {} as IHouseInformation,
     queryFn: () => HouseService.getHouseStatusById(houseId),
+  });
+
+  return { data, isFetching, isError, isSuccess };
+};
+
+export const useStatusByPlaceId = (placeId: number) => {
+  const { data, isError, isSuccess, isFetching } = useQuery({
+    queryKey: [`get allowed status by place id: ${placeId}`],
+    initialData: [],
+    queryFn: () => StatusService.getStatusesByPlaceId(placeId),
   });
 
   return { data, isFetching, isError, isSuccess };

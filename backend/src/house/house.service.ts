@@ -160,6 +160,7 @@ export class HouseService {
         houseStatus: {
           include: {
             status: true,
+            place: true,
           },
           where: {
             status: {
@@ -193,8 +194,10 @@ export class HouseService {
       houseType: houseInformation.houseType,
       houseId: houseInformation.houseId,
       peopleCount: houseInformation.peopleCount,
-      housemaid: this.getFormatedHouseStatus(housemaidInformation),
-      houseman: this.getFormatedHouseStatus(housemanInformation),
+      status: [
+        ...this.getFormatedHouseStatus(housemaidInformation),
+        ...this.getFormatedHouseStatus(housemanInformation),
+      ],
     };
   }
 
@@ -214,6 +217,7 @@ export class HouseService {
         houseStatus: {
           include: {
             status: true,
+            place: true,
           },
           where: {
             status: {
@@ -239,7 +243,6 @@ export class HouseService {
       peopleCount: house.peopleCount,
       houseStatus: house.houseStatus.map(houseStatus => ({
         statusId: houseStatus.status.statusId,
-        placeId: houseStatus.placeId,
         timeStart: houseStatus.timeStart,
         timeEnd: houseStatus.timeEnd,
         name: houseStatus.status.name,

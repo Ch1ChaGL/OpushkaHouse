@@ -33,16 +33,18 @@ export const HouseService = {
     return response.data;
   },
 
-  async updateHousemaidStatus(
+  async updateStatus(
     houseId: number,
     placeId: number,
     statusId: number,
+    timeStart: string | null = null,
+    timeEnd: string | null = null,
   ) {
     const response = await instance<void>(
       createRequestConfig(
         HttpMethods.PUT,
         HouseEndPointsMap[HouseEndPoint.UPDATE_HOUSE],
-        { houseId, placeId, statusId },
+        { houseId, placeId, statusId, timeStart, timeEnd },
       ),
     );
 

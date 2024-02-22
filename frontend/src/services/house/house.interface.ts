@@ -44,6 +44,5 @@ export interface IHouseInformation {
   houseType: IHouseType;
   houseId: number;
   peopleCount: number;
-  housemaid: IHouseStatus[];
-  houseman: IHouseStatus[];
+  status: IHouseStatus[];
 }

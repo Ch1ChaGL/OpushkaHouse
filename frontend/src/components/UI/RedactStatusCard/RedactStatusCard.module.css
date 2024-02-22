@@ -1,0 +1,24 @@
+.container {
+  margin: 20px 0px;
+  padding: 20px;
+}
+
+.card {
+  margin: 20px 0px;
+  transition: all 0.3s ease;
+}
+
+@media (hover: hover) {
+  .card:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@media (hover: none) {
+  .card:hover {
+  }
+}
+
+.title {
+  color: var(--navyBlue);
+}

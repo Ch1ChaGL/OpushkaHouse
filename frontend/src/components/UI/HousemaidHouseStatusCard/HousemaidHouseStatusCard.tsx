@@ -7,7 +7,7 @@ import {
 } from '../../../hooks/useAdditionalHouseInformation';
 import { HouseStatus } from '../../../consts/HouseStatus.const';
 import ToggleButton from '../ToggleButton/ToggleButton';
-import { useHousemiadHouseStatusMutate } from '../../../hooks/useHouseStatus';
+import { useHouseStatusMutate } from '../../../hooks/useHouseStatus';
 
 const HousemaidHouseStatusCard = (data: IHousemaidHouseInformation) => {
   const additionalInformation = useAdditionalHouseInformation(data);
@@ -16,7 +16,7 @@ const HousemaidHouseStatusCard = (data: IHousemaidHouseInformation) => {
     data.houseStatus[0].timeEnd,
   );
 
-  const mutate = useHousemiadHouseStatusMutate();
+  const mutate = useHouseStatusMutate();
 
   return (
     <div
