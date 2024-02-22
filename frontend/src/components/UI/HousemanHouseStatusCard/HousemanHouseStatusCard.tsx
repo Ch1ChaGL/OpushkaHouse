@@ -9,6 +9,7 @@ import { useHouseStatusMutate } from '../../../hooks/useHouseStatus';
 import { HouseStatus } from '../../../consts/HouseStatus.const';
 import ToggleButton from '../ToggleButton/ToggleButton';
 import { Card } from '@mui/material';
+import StatusInformation from '../StatusInformation/StatusInformation';
 
 const HousemanHouseStatusCard = (data: IHousemaidHouseInformation) => {
   const additionalInformation = useAdditionalHouseInformation(data);
@@ -21,56 +22,21 @@ const HousemanHouseStatusCard = (data: IHousemaidHouseInformation) => {
 
   return (
     <Card variant='outlined' className={styles.card}>
-      <div
-        className={`${styles.container} ${
-          data.houseStatus[0].statusId === HouseStatus.NeedCheckCleanSite ||
-          data.houseStatus[0].statusId === HouseStatus.CleanSite
-            ? styles.active
-            : ''
-        }`}
-      >
+      <div>
         <div className={styles.content}>
           <div className={styles.houseId}>{data.houseId}</div>
           <div className={styles.houseInformations}>
-            <div
-              className={`${styles.houseStatus} ${
-                data.houseStatus[0].statusId ===
-                  HouseStatus.NeedCheckCleanSite ||
-                data.houseStatus[0].statusId === HouseStatus.CleanSite
-                  ? styles.blue
-                  : styles.red
-              }`}
-            >
-              {data.houseStatus[0].name}
-            </div>
-            <div className={styles.houseInformation}>
-              {additionalInformation}
-            </div>
-            <div className={styles.houseInterval}>{interval}</div>
+            {data.houseStatus
+              .sort((a, b) => a.place.placeId - b.place.placeId)
+              .map(status => (
+                <div
+                  className={styles.housemanStatus__card}
+                  key={status.statusId}
+                >
+                  <StatusInformation {...status} name={status.name} />
+                </div>
+              ))}
           </div>
-        </div>
-        <div className={styles.btn}>
-          <ToggleButton
-            initialValue={
-              data.houseStatus[0].statusId ===
-                HouseStatus.NeedCheckCleanHouse ||
-              data.houseStatus[0].statusId === HouseStatus.CleanSite
-                ? true
-                : false
-            }
-            onClick={() =>
-              mutate.mutate({
-                houseId: data.houseId,
-                placeId: data.houseStatus[0].place.placeId,
-                statusId:
-                  data.houseStatus[0].statusId ===
-                    HouseStatus.NeedCheckCleanSite ||
-                  data.houseStatus[0].statusId === HouseStatus.CleanSite
-                    ? HouseStatus.NeedsSiteCleaning
-                    : HouseStatus.NeedCheckCleanSite,
-              })
-            }
-          />
         </div>
       </div>
     </Card>

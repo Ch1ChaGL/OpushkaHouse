@@ -39,7 +39,7 @@
 .content {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   gap: 10px;
 }
 .houseStatus {
@@ -51,6 +51,16 @@
   word-break: keep-all;
   color: var(--grey);
   font-size: 10px;
+}
+.housemanStatus__card {
+  flex: 1 1 250px;
+}
+.houseInformations {
+  display: flex;
+  gap: 20px;
+  justify-content: start;
+  align-items: start;
+  flex: 0 1 700px;
 }
 
 .red {

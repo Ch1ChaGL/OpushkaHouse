@@ -16,7 +16,7 @@ const HouseAdminCard = (house: IAdminHouseStatus) => {
 
   const housemanStatus = house.houseStatus
     .filter(status => status.roleId === RoleType.Houseman)
-    .sort((a, b) => a.statusId - b.statusId);
+    .sort((a, b) => a.place.placeId - b.place.placeId);
 
   return (
     <Card variant='outlined' className={styles.card}>
@@ -52,7 +52,10 @@ const HouseAdminCard = (house: IAdminHouseStatus) => {
             </div>
           </div>
           <div className={styles.btn}>
-            <Button text='Редактировать' onClick={() => navigate(`${HOUSE_ROUTE}/${house.houseId}`)}/>
+            <Button
+              text='Редактировать'
+              onClick={() => navigate(`${HOUSE_ROUTE}/${house.houseId}`)}
+            />
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <div className={styles.container}>
       <div className={styles.text}>
-        Create by{' '}
+        Created by{' '}
         <a href='https://github.com/Ch1ChaGL' className={styles.link}>
           Ch1ChaGl
         </a>{' '}

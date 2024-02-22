@@ -241,6 +241,9 @@ export class HouseService {
         },
         houseType: true,
       },
+      orderBy: {
+        houseId: 'asc',
+      },
     });
 
     return this.transformedData(houseData);

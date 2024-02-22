@@ -15,8 +15,8 @@ export interface IHousemaidHouseStatus {
   place: IPlace;
   timeStart: string | null;
   timeEnd: string | null;
-  name: string | null;
-  roleId: number | null;
+  name: string;
+  roleId: number;
 }
 
 export interface IAdminHouseStatus {
