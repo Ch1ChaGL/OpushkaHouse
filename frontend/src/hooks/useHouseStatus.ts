@@ -24,7 +24,16 @@ export const useHouseStatusMutate = () => {
       houseId: number;
       placeId: number;
       statusId: number;
-    }) => HouseService.updateStatus(data.houseId, data.placeId, data.statusId),
+      timeStart?: string | null;
+      timeEnd?: string | null;
+    }) =>
+      HouseService.updateStatus(
+        data.houseId,
+        data.placeId,
+        data.statusId,
+        data.timeStart,
+        data.timeEnd,
+      ),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [`get housemaid house status`],

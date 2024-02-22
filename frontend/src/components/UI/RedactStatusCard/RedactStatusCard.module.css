@@ -26,3 +26,7 @@
 .field {
   margin: 10px 0px;
 }
+.btns {
+  display: flex;
+  gap: 20px;
+}

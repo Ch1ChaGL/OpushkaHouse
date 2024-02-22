@@ -19,7 +19,11 @@ const HouseRedactScreen: React.FC<IHouseInformation> = data => {
       </div>
       <div className={styles.housemaidStatus}>
         {data.status.map(status => (
-          <RedactStatusCard {...status} key={status.statusId} />
+          <RedactStatusCard
+            {...status}
+            key={status.statusId}
+            houseId={data.houseId}
+          />
         ))}
       </div>
     </div>

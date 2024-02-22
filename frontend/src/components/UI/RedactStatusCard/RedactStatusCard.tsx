@@ -2,7 +2,10 @@ import React, { FC } from 'react';
 import styles from './RedactStatusCard.module.css';
 import { IHouseStatus } from '../../../services/house/house.interface';
 import { Card, MenuItem, TextField } from '@mui/material';
-import { useStatusByPlaceId } from '../../../hooks/useHouseStatus';
+import {
+  useHouseStatusMutate,
+  useStatusByPlaceId,
+} from '../../../hooks/useHouseStatus';
 import Loader from '../Loader/Loader';
 import { IStatusUpdate } from '../../../services/status/status.interface';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
@@ -17,7 +20,11 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import Button from '../Button/Button';
 
-const RedactStatusCard: FC<IHouseStatus> = status => {
+interface IRedactStatusCardProps extends IHouseStatus {
+  houseId: number;
+}
+
+const RedactStatusCard: FC<IRedactStatusCardProps> = status => {
   const { data, isFetching } = useStatusByPlaceId(status.place.placeId);
   const {
     register,
@@ -29,8 +36,17 @@ const RedactStatusCard: FC<IHouseStatus> = status => {
     mode: 'onChange',
   });
 
-  const onSubmit: SubmitHandler<IStatusUpdate> = data => {
-    console.log(data);
+  const mutate = useHouseStatusMutate();
+
+  const onSubmit: SubmitHandler<IStatusUpdate> = value => {
+    const updateObject: IStatusUpdate = {
+      houseId: status.houseId,
+      placeId: status.place.placeId,
+      statusId: value.statusId,
+      timeStart: value.timeStart ? value.timeStart : null,
+      timeEnd: value.timeEnd ? value.timeEnd : null,
+    };
+    mutate.mutate(updateObject);
   };
 
   if (isFetching) return <Loader />;
@@ -106,7 +122,15 @@ const RedactStatusCard: FC<IHouseStatus> = status => {
                 )}
               />
             </div>
-            <Button type='submit' text='Сохранить' />
+            <div className={styles.btns}>
+              <Button type='submit' text='Сохранить' />
+              <Button
+                text='Сбросить'
+                onClick={() => reset()}
+                color={'#e84900'}
+                hover={'#ad3802'}
+              />
+            </div>
           </form>
         </div>
       </Card>
