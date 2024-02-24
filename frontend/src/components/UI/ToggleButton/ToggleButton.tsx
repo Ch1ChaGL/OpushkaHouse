@@ -4,11 +4,13 @@ import styles from './ToggleButton.module.css';
 interface IToggleButtonProprs {
   initialValue: boolean;
   onClick: () => void;
+  text: string;
 }
 
 const ToggleButton: React.FC<IToggleButtonProprs> = ({
   initialValue,
   onClick,
+  text,
 }) => {
   const [isActive, setIsActive] = useState(initialValue);
 
@@ -22,7 +24,7 @@ const ToggleButton: React.FC<IToggleButtonProprs> = ({
       <div
         className={`${styles['rectangle']} ${isActive ? styles['active'] : ''}`}
       ></div>
-      <div className={styles['button-text']}>Убрано</div>
+      <div className={styles['button-text']}>{text}</div>
     </div>
   );
 };

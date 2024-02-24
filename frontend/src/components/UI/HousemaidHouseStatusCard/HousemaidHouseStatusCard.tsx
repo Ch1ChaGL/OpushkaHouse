@@ -47,6 +47,7 @@ const HousemaidHouseStatusCard = (data: IHousemaidHouseInformation) => {
       </div>
       <div className={styles.btn}>
         <ToggleButton
+          text='Убрано'
           initialValue={
             data.houseStatus[0].statusId === HouseStatus.NeedCheckCleanHouse ||
             data.houseStatus[0].statusId === HouseStatus.CleanHouse
@@ -55,7 +56,6 @@ const HousemaidHouseStatusCard = (data: IHousemaidHouseInformation) => {
           }
           onClick={() =>
             mutate.mutate({
-              
               houseId: data.houseId,
               placeId: data.houseStatus[0].place.placeId,
               statusId:
