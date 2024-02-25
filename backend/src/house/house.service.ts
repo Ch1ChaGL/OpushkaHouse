@@ -66,6 +66,7 @@ export class HouseService {
       if (!LeaveTime && MoveInTime) {
         timeStart = null;
         timeEnd = house[HousemaidFileColumn.MoveIn];
+        console.log(house[HousemaidFileColumn.HouseID], timeEnd);
       }
 
       //Выезд
@@ -80,10 +81,12 @@ export class HouseService {
         timeEnd = house[HousemaidFileColumn.MoveIn];
       }
 
+      console.log(timeStart, timeEnd);
       await this.updateHouseStatus(
         houseId,
         HouseStatusTypeId,
         Place.House,
+        true,
         timeStart,
         timeEnd,
       );
@@ -91,6 +94,7 @@ export class HouseService {
         houseId,
         SiteStatusTypeId,
         Place.Site,
+        true,
         timeStart,
         timeEnd,
       );

@@ -1,4 +1,8 @@
-import { QueryClient, QueryClientProvider, keepPreviousData } from '@tanstack/react-query';
+import {
+  QueryClient,
+  QueryClientProvider,
+  keepPreviousData,
+} from '@tanstack/react-query';
 import { FC, ReactNode } from 'react';
 import { persistor, store } from '../store/inedx';
 import { Provider } from 'react-redux';

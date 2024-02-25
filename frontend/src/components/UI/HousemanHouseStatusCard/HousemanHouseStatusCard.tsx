@@ -34,16 +34,33 @@ const HousemanHouseStatusCard = (data: IHousemaidHouseInformation) => {
     status => status.place.placeId === PlaceType.HotTub,
   );
   return (
-    <Card variant='outlined' className={styles.card}>
+    <Card
+      variant='outlined'
+      className={`${styles.card} ${
+        getStatusValueForButhHouse(buthHouse) &&
+        getStatusValueForSite(site) &&
+        getStatusValueForHotTub(hotTub)
+          ? styles.active
+          : ''
+      }`}
+    >
       <div>
         <div className={styles.content}>
-          <div className={styles.houseId}>{data.houseId}</div>
+          <div className={styles.title}>
+            <div className={styles.houseId}>{data.houseId}</div>
+            <div className={styles.additionalInformation}>
+              {additionalInformation}
+            </div>
+          </div>
+
           <div className={styles.houseInformations}>
             {data.houseStatus
               .sort((a, b) => a.place.placeId - b.place.placeId)
               .map(status => (
                 <div
-                  className={styles.housemanStatus__card}
+                  className={`${styles.housemanStatus__card} ${
+                    getStatusValueByPlaceId(status) ? styles.active : styles.red
+                  }`}
                   key={status.statusId}
                 >
                   <StatusInformation {...status} name={status.name} />
@@ -53,17 +70,44 @@ const HousemanHouseStatusCard = (data: IHousemaidHouseInformation) => {
           <div className={styles.btns}>
             <ToggleButton
               initialValue={getStatusValueForSite(site)}
-              onClick={() => {}}
+              onClick={() => {
+                mutate.mutate({
+                  placeId: PlaceType.Site,
+                  houseId: data.houseId,
+                  statusId:
+                    getStatusValueForSite(site) === false
+                      ? HouseStatus.NeedCheckCleanSite
+                      : HouseStatus.NeedsSiteCleaning,
+                });
+              }}
               text='Участок'
             />
             <ToggleButton
               initialValue={getStatusValueForButhHouse(buthHouse)}
-              onClick={() => {}}
+              onClick={() => {
+                mutate.mutate({
+                  placeId: PlaceType.Bathhouse,
+                  houseId: data.houseId,
+                  statusId:
+                    getStatusValueForButhHouse(buthHouse) === false
+                      ? HouseStatus.NeedChekBathhous
+                      : HouseStatus.BathhouseLightingRequired,
+                });
+              }}
               text='Баня'
             />
             <ToggleButton
               initialValue={getStatusValueForHotTub(hotTub)}
-              onClick={() => {}}
+              onClick={() => {
+                mutate.mutate({
+                  placeId: PlaceType.HotTub,
+                  houseId: data.houseId,
+                  statusId:
+                    getStatusValueForHotTub(hotTub) === false
+                      ? HouseStatus.NeedChekHotTub
+                      : HouseStatus.HotTubKindlingRequired,
+                });
+              }}
               text='Купель'
             />
           </div>
@@ -94,4 +138,16 @@ const getStatusValueForHotTub = (hotTub: IHousemaidHouseStatus | undefined) => {
   if (hotTub === undefined) throw new Error('Status undefined');
   if (hotTub.statusId === HouseStatus.HotTubKindlingRequired) return false;
   else return true;
+};
+
+const getStatusValueByPlaceId = (ter: IHousemaidHouseStatus | undefined) => {
+  if (ter === undefined) throw new Error('Expect undefined');
+  switch (ter.place.placeId) {
+    case PlaceType.Site:
+      return getStatusValueForSite(ter);
+    case PlaceType.Bathhouse:
+      return getStatusValueForButhHouse(ter);
+    case PlaceType.HotTub:
+      return getStatusValueForHotTub(ter);
+  }
 };

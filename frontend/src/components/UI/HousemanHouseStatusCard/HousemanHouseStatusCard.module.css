@@ -1,8 +1,8 @@
 .houseId {
   padding: 25px;
   border: 5px solid var(--navyBlue);
-  width: 30px;
-  height: 30px;
+  width: 13px;
+  height: 13px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -71,20 +71,61 @@
   color: var(--navyBlue);
 }
 
+.btns {
+  display: flex;
+  gap: 20px;
+}
+
 @media (min-width: 500px) {
   .houseStatus {
     font-size: 17px;
     margin-bottom: 5px;
   }
-  .houseInformation,
-  .houseInterval {
+  .houseInformation {
     word-break: keep-all;
     color: var(--grey);
     font-size: 15px;
   }
+  .btns {
+    justify-content: center;
+  }
+  .title {
+    justify-content: center;
+  }
 }
 
-.btns {
+@media (max-width: 1050px) {
+  .content {
+    flex-direction: column;
+    gap: 25px;
+  }
+  .btns {
+    width: 100%;
+    justify-content: center;
+  }
+  .houseInformations {
+    flex: 1 1 auto;
+  }
+  .title {
+    width: 100%;
+  }
+}
+
+.active {
+  opacity: 40%;
+}
+
+.title {
   display: flex;
-  gap: 10px;
+  gap: 20px;
+  align-items: center;
+}
+
+.additionalInformation {
+  color: #84888f;
+  word-wrap: break-word;
+}
+
+.red {
+  color: var(--error);
 }

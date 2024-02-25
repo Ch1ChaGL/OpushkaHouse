@@ -7,6 +7,7 @@ export enum HouseEndPoint {
   HOUSEMAN_STATUS,
   CREATE_HOUSE,
   UPDATE_HOUSE,
+  UPDATE_FROM_EXCEL,
 }
 
 export const HouseEndPointsMap: Record<HouseEndPoint, string> = {
@@ -16,4 +17,5 @@ export const HouseEndPointsMap: Record<HouseEndPoint, string> = {
   [HouseEndPoint.CREATE_HOUSE]: `${BASE_URL}/create`,
   [HouseEndPoint.UPDATE_HOUSE]: `${BASE_URL}/updateStatus`,
   [HouseEndPoint.HOUSE_INFORMATION_BY_ID]: `${BASE_URL}/`,
+  [HouseEndPoint.UPDATE_FROM_EXCEL]: `${BASE_URL}/updateFromExcel`,
 };

@@ -8,7 +8,7 @@ import { StatusService } from '../services/status/status.service';
 
 export const useHousemaidHouseStatus = () => {
   const { data, isError, isSuccess, isFetching } = useQuery({
-    queryKey: ['get housemaid house status'],
+    queryKey: ['get house status'],
     initialData: [],
     queryFn: () => HouseService.getHousemaidStatus(),
   });
@@ -16,9 +16,25 @@ export const useHousemaidHouseStatus = () => {
   return { data, isFetching, isError, isSuccess };
 };
 
+export const useUploadExcelFile = (onSuccessCallback?: () => void) => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: (file: any) => HouseService.uploadExcel(file),
+    onSuccess: () => {
+      onSuccessCallback && onSuccessCallback();
+      queryClient.invalidateQueries({
+        queryKey: [`get admin house status`],
+      });
+    },
+  });
+
+  return mutation;
+};
+
 export const useHousemanHouseStatus = () => {
   const { data, isError, isSuccess, isFetching } = useQuery({
-    queryKey: ['get houseman house status'],
+    queryKey: ['get house status'],
     initialData: [],
     queryFn: () => HouseService.getHousemanStatus(),
   });
@@ -49,7 +65,7 @@ export const useHouseStatusMutate = (onSuccessCallback?: () => void) => {
     onSuccess: () => {
       onSuccessCallback && onSuccessCallback();
       queryClient.invalidateQueries({
-        queryKey: [`get housemaid house status`],
+        queryKey: [`get house status`],
       });
     },
   });

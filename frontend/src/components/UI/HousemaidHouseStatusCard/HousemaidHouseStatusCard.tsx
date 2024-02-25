@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { IHousemaidHouseInformation } from '../../../services/house/house.interface';
 import styles from './HousemaidHouseStatusCard.module.css';
 import {

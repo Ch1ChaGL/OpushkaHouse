@@ -19,6 +19,22 @@ export const HouseService = {
 
     return response.data;
   },
+  async uploadExcel(file: any) {
+    const formData = new FormData();
+
+    formData.append('file', file);
+
+    const response = await instance<void>({
+      method: HttpMethods.POST,
+      url: HouseEndPointsMap[HouseEndPoint.UPDATE_FROM_EXCEL],
+      data: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    return response.data;
+  },
 
   async getHousemanStatus() {
     const response = await instance<IHousemaidHouseInformation[]>(
